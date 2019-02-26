@@ -73,9 +73,9 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="50">
+      width="120">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="editExpense(scope.$index, scope.row)" >编辑</el-button>
+        <el-button type="primary" plain style="width: 75px" size="small" @click="editExpense(scope.$index, scope.row)" >编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
