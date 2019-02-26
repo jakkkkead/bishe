@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wage.dao.TUserMapper" >
+    <resultMap id="userMap" type="com.wage.bean.TUser">
+        <result column="user_id" property="userId"></result>
+        <result column="password" property="password"></result>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="depart_id" property="departId"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="leave_time" property="leaveTime"></result>
+        <result column="status" property="status"></result>
+        <result column="birthdate" property="birthdate"></result>
+        <result column="post" property="post"></result>
+    </resultMap>
+  <insert id="insertUser" parameterType="com.wage.bean.TUser">
+      insert into t_user (user_id,name,sex,phone,email,depart_id,create_time,leave_time,status,password,birthdate,post)
+      values (#{userId},#{name},#{sex},#{phone},#{email},#{departId},#{createTime},#{leaveTime},#{status},#{password},#{birthdate},#{post})
+  </insert>
+   <select id="getUserByNameAndPwd" resultType="com.wage.bean.TUser">
+       select * from t_user where name =#{name} and password =#{password}
+   </select>
+    <select id="checkName" resultType="java.lang.String">
+        select name from t_user where name = #{name}
+    </select>
+    <select id="getUsersList" resultMap="userMap">
+          select user_id,password,name,sex,phone,email,sex,depart_id,create_time,leave_time,status,post,birthdate from t_user
+          <where>
+              <if test="beginDate !=null and beginDate!='null'">
+                 and create_time <![CDATA[>=]]> date(#{beginDate})
+              </if>
+              <if test="endDate !=null and endDate!='null'">
+                and  create_time <![CDATA[<=]]> date(#{endDate})
+              </if>
+          </where>
+          limit #{index},#{pageSize}
+    </select>
+    <select id="getUserCount" resultType="java.lang.Integer">
+        select count(*) from t_user
+        <where>
+            <if test="beginDate !=null and beginDate!='null'">
+                and create_time <![CDATA[>=]]> date(#{beginDate})
+            </if>
+            <if test="endDate !=null and endDate!='null'">
+                and  create_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+        </where>
+    </select>
+    <insert id="updateUser">
+        replace into t_user (user_id,name,password,sex,phone,email,depart_id,create_time,leave_time,status,birthdate,post)
+        values (#{userId},#{name},#{password},#{sex},#{phone},#{email},#{departId},#{createTime},#{leaveTime},#{status},#{birthdate},#{post})
+    </insert>
+    <select id="getUserById" resultMap="userMap" >
+          select * from t_user where user_id =#{id}
+
+    </select>
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wage.dao.THolidayMapper" >
+    <resultMap id="holidayMap" type="com.wage.bean.THoliday">
+        <result column="holiday_id" property="holidayId"></result>
+        <result column="name" property="name"></result>
+        <result column="depart_id" property="departId"></result>
+        <result column="type" property="type"></result>
+        <result column="begin_time" property="beginTime"></result>
+        <result column="end_time" property="endTime"></result>
+        <result column="status" property="status"></result>
+        <result column="approve_name" property="approveName"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+    <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
+        <result column="totalday" property="value"></result>
+        <result column="monthday" property="dateType"></result>
+    </resultMap>
+    <insert id="createHoliday">
+        insert into t_holiday (holiday_id,name,depart_id,type,begin_time,end_time,status,remark)
+        values(#{holidayId},#{name},#{departId},#{type},date(#{beginTime}),date(#{endTime}),#{status},#{remark})
+    </insert>
+    <select id="getHolidayList" resultMap="holidayMap">
+        select * from t_holiday
+        <where>
+            <if test="beginDate != 'null' and beginDate !=''">
+                and begin_time <![CDATA[>=]]> date(#{beginDate})
+            </if>
+            <if test="endDate != 'null' and endDate !=''">
+                and end_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+        </where>
+      limit #{index},#{pageSize}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from t_holiday
+        <where>
+            <if test="beginDate != 'null' and  beginDate !=''">
+                and begin_time <![CDATA[>=]]> date(#{beginDate})
+            </if>
+            <if test="endDate != 'null' and endDate !=''">
+                and end_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+        </where>
+    </select>
+    <update id="checkHoliday">
+        update t_holiday set status = #{status}
+        <if test="approveName !=null and approveName !=''">
+            ,approve_name = #{approveName}
+        </if>
+        where holiday_id = #{holidayId}
+    </update>
+    <insert id="updateHoliday">
+        replace into t_holiday (holiday_id,name,depart_id,type,begin_time,end_time,status,remark)
+        values(#{holidayId},#{name},#{departId},#{type},date(#{beginTime}),date(#{endTime}),#{status},#{remark})
+    </insert>
+    <select id="getHolidayForm" resultMap="formMap">
+        SELECT SUM(DATEDIFF(end_time,begin_time)) totalday,DATE_FORMAT(begin_time,'%Y-%m') monthday FROM t_holiday
+        <where>
+            and  DATE_FORMAT(begin_time,'%Y-%m') IN
+            <foreach collection="monthList" item="month" separator="," open="(" close=")">
+                #{month}
+            </foreach>
+            and status =1
+            <if test="departId !=null">
+                and depart_id =#{departId}
+            </if>
+            <if test="type !=null">
+                and type =#{type}
+            </if>
+        </where>
+        GROUP BY monthday
+    </select>
+</mapper>

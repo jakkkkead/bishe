@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wage.dao.TExpenseMapper" >
+    <resultMap id="expense_Map" type="com.wage.bean.TExpense">
+        <result property="expenseId" column="expense_id"></result>
+        <result property="createName" column="create_name"></result>
+        <result property="receiverName" column="receiver_name"></result>
+        <result property="accountNumber" column="account_number"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="remark" column="remark"></result>
+        <result property="type" column="type"></result>
+        <result property="status" column="status"></result>
+        <result property="money" column="money"></result>
+        <result property="payway" column="payway"></result>
+        <result property="beginTime" column="begin_time"></result>
+        <result property="endTime" column="end_time"></result>
+    </resultMap>
+    <resultMap id="expenseForm_Map" type="com.wage.bean.ExpenseForms">
+        <result property="money" column="monthMoney"></result>
+        <result property="dateType" column="monthdate"></result>
+    </resultMap>
+    <insert id="addExpense" >
+        insert into t_expense (expense_id,create_name,depart_id,payway,receiver_name,account_number,begin_time,end_time,type,remark,money,create_time,status)
+        values (#{expenseId},#{createName},#{departId},#{payway},#{receiverName},#{accountNumber},date(#{beginTime}),date(#{endTime}),#{type},#{remark},#{money},
+                date(#{createTime}),#{status})
+    </insert>
+    <update id="updateExpense">
+        replace into t_expense (expense_id,create_name,depart_id,payway,receiver_name,account_number,begin_time,end_time,type,remark,money,create_time,status)
+        values (#{expenseId},#{createName},#{departId},#{payway},#{receiverName},#{accountNumber},date(#{beginTime}),date(#{endTime}),#{type},#{remark},#{money},
+                date(#{createTime}),#{status})
+    </update>
+    <select id="selectExpense" resultMap="expense_Map">
+       select expense_id, create_name,receiver_name,account_number,DATE_FORMAT(create_time,'%Y-%m-%d') create_time ,remark,type ,status,money,payway,
+        begin_time ,end_time from t_expense
+       <where>
+            <if test="beginTime !='null' and beginTime !=''">
+                and begin_time <![CDATA[>=]]> #{beginTime}
+            </if>
+           <if test="endTime !='null' and endTime !=''">
+               and end_time <![CDATA[<=]]> #{endTime}
+           </if>
+           <if test="name !='null' and name!=''">
+               and create_name like '%${name}%'
+           </if>
+
+        </where>
+        limit #{currentIndex},#{pageSize}
+    </select>
+    <select id="getExpensCount" resultType="java.lang.Integer">
+        select count(*) from t_expense
+        <where>
+            <if test="beginTime !='null' and beginTime !=''">
+                and begin_time <![CDATA[>=]]> #{beginTime}
+            </if>
+            <if test="endTime !='null' and endTime !=''">
+                and end_time <![CDATA[<=]]> #{endTime}
+            </if>
+            <if test="name !='null' and name!=''">
+                and create_name like '%${name}%'
+            </if>
+
+        </where>
+    </select>
+    <select id="searchExpense" resultMap="expense_Map">
+        select create_name,receiver_name,account_number,DATE_FORMAT(create_time,'%Y-%m-%d') create_time ,remark,type ,status,money,payway from t_expense
+            <where>
+                    <if test="#{beginTime} !='null'">
+                        and begin_time <![CDATA[>=]]> date(#{beginTime})
+                    </if>
+                   <if test="#{endTime} !='null'">
+                       and end_time <![CDATA[<=]]> date(#{endTime})
+                   </if>
+                   <if test="#{name} !='null'">
+                       and create_name like '%${name}%'
+                   </if>
+
+                </where>
+        limit #{currentIndex},#{pageSize}
+    </select>
+    <select id="getExpenseById" resultType="com.wage.bean.TExpense">
+        select * from t_expense where expense_id = #{expenseId}
+    </select>
+    <select id="getExpenseForms" resultMap="expense_Map">
+        select type,ifnull(SUM(money),0) money from t_expense
+      <where>
+          <if test="beginDate !=null and beginDate!=''">
+          and create_time <![CDATA[>=]]> date(#{beginDate})
+          </if>
+          <if test="endDate !=null and endDate!=''">
+              and create_time <![CDATA[<=]]> date(#{endDate})
+          </if>
+          <if test="departId !=null and departId!=''">
+              and depart_id = #{departId}
+          </if>
+          and status=1
+      </where>
+      group by type
+    </select>
+    <select id="getYearExpenseForms" resultMap="expenseForm_Map">
+        SELECT IFNULL(SUM(money),0) monthMoney , DATE_FORMAT(create_time,'%Y-%m') monthdate FROM t_expense
+        <where>
+         and DATE_FORMAT(create_time,'%Y-%m') IN
+              <foreach collection="monthList" close=")" open="(" separator="," item="monthdate">
+                #{monthdate}
+              </foreach>
+        <if test="departId !=null and departId!=''">
+            and depart_id =#{departId}
+        </if>
+           and status=1
+        </where>
+
+        GROUP BY monthdate
+        order by monthdate asc
+    </select>
+</mapper>

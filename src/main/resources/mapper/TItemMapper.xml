@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wage.dao.TItemMapper">
+    <resultMap id="ItemMap" type="com.wage.bean.TItem">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <result property="beginTime" column="begin_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="departId" column="depart_id"></result>
+        <result property="principal" column="principal"></result>
+        <result property="description" column="description"></result>
+        <result property="status" column="status"></result>
+        <result property="payment" column="payment"></result>
+        <result property="type" column="type"></result>
+        <result property="payType" column="pay_type"></result>
+    </resultMap>
+    <insert id="createItem">
+        insert into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
+                            pay_type)
+        values (#{id}, #{name}, date (#{beginTime}), date (#{endTime}), #{departId}, #{principal}, #{description},
+                #{status}, #{payment}, #{type}, #{payType})
+    </insert>
+    <select id="selectItem" resultMap="ItemMap">
+        select * from t_item
+        <where>
+            <if test="beginDate !='null' and beginDate !=''">
+                and begin_time <![CDATA[>=]]> date(#{beginDate})
+            </if>
+            <if test="endDate !='null' and endDate !=''">
+                and end_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+            <if test="departId !=null">
+                and depart_id = #{departId}
+            </if>
+
+        </where>
+        limit #{index},#{pageSize}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from t_item
+        <where>
+            <if test="beginDate !='null' and beginDate !=''">
+                and begin_time <![CDATA[>=]]> date(#{beginDate})
+            </if>
+            <if test="endDate !='null' and endDate !=''">
+                and end_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+            <if test="departId !=null">
+                and depart_id = #{departId}
+            </if>
+        </where>
+    </select>
+    <insert id="updateItem">
+        replace into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
+        pay_type)
+        values (#{id}, #{name}, date (#{beginTime}), date (#{endTime}), #{departId}, #{principal}, #{description},
+        #{status}, #{payment}, #{type}, #{payType})
+    </insert>
+</mapper>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>财务系统注册页面</title>
+
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<![endif]-->
+
+<link href="css/normalize.css" rel="stylesheet"/>
+<link href="css/jquery-ui.css" rel="stylesheet"/>
+<link href="css/jquery.idealforms.min.css" rel="stylesheet" media="screen"/>
+
+<style type="text/css">
+body{font:normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;color: #222;background:url(pattern.png);overflow-y:scroll;padding:60px 0 0 0;}
+#my-form{width:755px;margin:0 auto;border:1px solid #ccc;padding:3em;border-radius:3px;box-shadow:0 0 2px rgba(0,0,0,.2);}
+#comments{width:350px;height:100px;}
+</style>
+
+</head>
+<body>
+
+
+<div class="row">
+
+  <div class="eightcol last">
+
+    <!-- Begin Form -->
+
+    <form id="my-form">
+
+        <section name="第一步">
+
+          <div><label>姓名:</label><input id="username" name="name" type="text"/></div>
+          <div><label>密码:</label><input id="pass" name="password" type="password"/></div>
+          <div><label>邮箱:</label><input id="email" name="email" data-ideal="required email" type="email"/></div>
+          <div><label>出生日期:</label><input id="birthdate" name="birthdate"  type="text"/></div>
+          <div><label>手机号:</label><input id="phone" name="phone"  type="text"/></div>
+        </section>
+
+        <section name="第二步">
+          <div id="languages">
+            <label>职称:</label>
+            <label><input type="checkbox" name="post" value="3"/>总经理</label>
+            <label><input type="checkbox" name="post" value="2"/>副总经理</label>
+            <label><input type="checkbox" name="post" value="1"/>部门主管</label>
+            <label><input type="checkbox" name="post" value="0"/>一般职员</label>
+          </div>
+          <div><label>性别:</label>
+            <label><input type="radio" name="sex" value="1" />男</label>
+            <label><input type="radio" name="sex" value="0"/>女</label>
+
+          </div>
+        </section>
+
+        <section name="第三步">
+          <div><label>部门:</label>
+          <select id="states" name="departId">
+            <option value="default">&ndash; 选择部门 &ndash;</option>
+            <option value="0">研发部</option>
+            <option value="1">财务部</option>
+            <option value="2">人力资源部</option>
+            <option value="3">采购部</option>
+            <option value="4">事业部</option>
+          </select>
+        </div>
+
+      </section>
+
+      <div><hr/></div>
+
+      <div>
+        <button type="button" onclick="subForm()">提交</button>
+        <button id="reset" type="button">重置</button>
+        <button id="tologin" type="button" onclick="toLogin()">我要登录</button>
+      </div>
+
+    </form>
+
+    <!-- End Form -->
+
+  </div>
+
+</div>
+
+
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.idealforms.js"></script>
+<script type="text/javascript">
+var options = {
+
+	onFail: function(){
+		alert( $myform.getInvalid().length +' invalid fields.' )
+	},
+
+	inputs: {
+		'password': {
+			filters: 'required pass',
+		},
+		'username': {
+			filters: 'required username',
+			data: {
+			//ajax: { url:'validate.php' }
+			}
+		},
+		'file': {
+			filters: 'extension',
+			data: { extension: ['jpg'] }
+		},
+		'comments': {
+			filters: 'min max',
+			data: { min: 50, max: 200 }
+		},
+		'states': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择国籍.'
+			}
+		},
+		'langs[]': {
+			filters: 'min max',
+			data: { min: 2, max: 3 },
+			errors: {
+				min: 'Check at least <strong>2</strong> options.',
+				max: 'No more than <strong>3</strong> options allowed.'
+			}
+		}
+	}
+
+};
+
+var $myform = $('#my-form').idealforms(options).data('idealforms');
+
+$('#reset').click(function(){
+	$myform.reset().fresh().focusFirst()
+});
+
+$myform.focusFirst();
+function subForm() {
+    $.ajax({
+        type :"POST",
+        url : "/sigin",
+        data : $("#my-form").serialize(),
+        success : function(data){
+            if(data.code ==0){
+                alert("注册成功！")
+      //          window.location.href="http://localhost:8080"
+                //  alert("登录成功！")
+            }else{
+                var username = data.msg;
+                alert(username+"已存在!注册失败")
+            }
+
+        }
+    })
+}
+function toLogin(){
+    window.location.href="http://localhost:8083/tologin"
+}
+</script>
+</body>
+</html>
