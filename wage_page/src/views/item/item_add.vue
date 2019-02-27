@@ -20,6 +20,12 @@
 
         </el-select>
       </el-form-item>
+      <el-form-item label="区域">
+        <el-select v-model="form.area" placeholder="请选择">
+          <el-option v-for="item in areaOption" :key="item.value" :value="item.value" :label="item.label"></el-option>
+
+        </el-select>
+      </el-form-item>
       <el-form-item label="所属行业">
         <el-select v-model="form.type" placeholder="请选择行业">
           <el-option v-for="item in typeOption" :key="item.value" :value="item.value" :label="item.label"></el-option>
@@ -67,6 +73,7 @@
           status: 0,
           payment: '',
           type:'',
+          area:'',
           payType: ''
         },
         departOption:[
@@ -91,6 +98,104 @@
             label : '事业部'
           }
         ],
+        areaOption:[
+          {
+            value :'宁夏',
+            label : '宁夏'
+          },
+          {
+            value :'西藏',
+            label : '西藏'
+          },
+          {
+            value :'广东',
+            label : '广东'
+          },
+          {
+            value :'福建',
+            label : '福建'
+          },
+          {
+            value :'吉林',
+            label : '吉林'
+          },
+          {
+            value :'内蒙古',
+            label : '内蒙古'
+          },
+          {
+            value :'甘肃',
+            label : '甘肃'
+          },
+          {
+            value :'湖北',
+            label : '湖北'
+          },
+          {
+            value :'江西',
+            label : '江西'
+          },
+          {
+            value :'浙江',
+            label : '浙江'
+          },
+          {
+            value :'江苏',
+            label : '江苏'
+          },
+          {
+            value :'新疆',
+            label : '新疆'
+          },
+          {
+            value :'山东',
+            label : '山东'
+          },
+          {
+            value :'安徽',
+            label : '安徽'
+          },
+          {
+            value :'湖南',
+            label : '湖南'
+          },
+          {
+            value :'黑龙江',
+            label : '黑龙江'
+          },
+          {
+            value :'辽宁',
+            label : '辽宁'
+          },
+          {
+            value :'云南',
+            label : '云南'
+          },
+          {
+            value :'河南',
+            label : '河南'
+          },
+          {
+            value :'河北',
+            label : '河北'
+          },
+          {
+            value :'重庆',
+            label : '重庆'
+          },
+          {
+            value :'上海',
+            label : '上海'
+          },
+          {
+            value :'北京',
+            label : '北京'
+          },
+          {
+            value :'天津',
+            label : '天津'
+          }
+        ],
         typeOption:[
           {
             value : 0,
@@ -111,6 +216,18 @@
           {
             value : 4,
             label : '金融'
+          },
+          {
+            value : 5,
+            label : '广告'
+          },
+          {
+            value : 6,
+            label : '气象'
+          },
+          {
+            value : 7,
+            label : '其他'
           }
         ],
         payTypeOption:[

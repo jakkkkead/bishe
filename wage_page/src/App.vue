@@ -58,7 +58,7 @@
               <el-menu-item-group>
                 <router-link to="item_view"><el-menu-item index="4-1"><i class="el-icon-view"></i>查看项目信息</el-menu-item></router-link>
                 <router-link to="item_add"><el-menu-item index="4-2"><i class="el-icon-circle-plus"></i>添加项目信息</el-menu-item></router-link>
-                <el-menu-item index="4-3"><i class="el-icon-view"></i>项目报表分析</el-menu-item>
+                <router-link to="item_form"><el-menu-item index="4-3"><i class="el-icon-view"></i>项目报表</el-menu-item></router-link>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="5">
@@ -69,7 +69,7 @@
               <el-menu-item-group>
                 <router-link to="user_add"><el-menu-item index="5-1"><i class="el-icon-view"></i>入职办理</el-menu-item></router-link>
                 <router-link to="user_view"><el-menu-item index="5-2"><i class="el-icon-circle-plus"></i>查看员工信息</el-menu-item></router-link>
-                <router-link to="item_view"><el-menu-item index="5-3"><i class="el-icon-circle-plus"></i>员工报表</el-menu-item></router-link>
+                <router-link to="user_form"><el-menu-item index="5-3"><i class="el-icon-circle-plus"></i>员工报表</el-menu-item></router-link>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="6">
@@ -78,7 +78,7 @@
                 <span>年度报表统计</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="6-1"><i class="el-icon-view"></i>年度报表统计</el-menu-item>
+                <router-link to="year_map"><el-menu-item index="6-1"><i class="el-icon-view"></i>年度报表统计</el-menu-item></router-link>
                 <el-menu-item index="6-2"><i class="el-icon-circle-plus"></i>人员变动分析</el-menu-item>
               </el-menu-item-group>
             </el-submenu>

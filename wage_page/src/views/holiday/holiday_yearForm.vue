@@ -53,6 +53,30 @@
                   type : 'value',
                   name : '天数'
                 }
+              ], dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+                  filterMode: 'empty',
+                  bottom: '52%'
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  filterMode: 'filter'
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  filterMode: 'empty'
+                },
+                {
+                  type: 'inside',
+                  yAxisIndex: [0],
+                  filterMode: 'filter'
+                }
               ],
               series : [
                 {

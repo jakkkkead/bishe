@@ -49,6 +49,15 @@ public class LoginController {
         }
 
     }
+
+    /**
+     * 获取用户列表（条件查询)
+     * @param currentPage
+     * @param pageSize
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
     @RequestMapping("getUsers")
     @ResponseBody
     public RestResult getUserInfo(int currentPage,int pageSize,String beginDate,String endDate){
@@ -62,6 +71,12 @@ public class LoginController {
         return RestResultGenerator.createOkResult(obj);
 
     }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     @RequestMapping("updateUser")
     @ResponseBody
     public RestResult updateUser(TUser user){
@@ -72,9 +87,9 @@ public class LoginController {
         TUser dbUser = loginService.getUserById(user.getUserId());
         if(!user.getName().equals(dbUser.getName())){
             String name = loginService.checkName(user.getName());
-           if(name !=null){
-            return RestResultGenerator.createFailResult(name);
-        }
+            if(name !=null){
+                return RestResultGenerator.createFailResult(name);
+            }
         }
         if(!user.getPassword().equals(dbUser.getPassword())){
             user.setPassword(Md5Util.MD5(user.getPassword()));
@@ -84,6 +99,14 @@ public class LoginController {
             return RestResultGenerator.createOkResult();
         }
         return RestResultGenerator.createFailResult();
+
+    }
+    @RequestMapping("getUserForm")
+    @ResponseBody
+    public RestResult getUserForm(String year, Integer departId){
+        Object obj = loginService.getUserForm(year,departId);
+
+        return RestResultGenerator.createOkResult(obj);
 
     }
 

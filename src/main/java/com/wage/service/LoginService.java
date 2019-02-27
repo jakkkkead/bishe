@@ -39,4 +39,5 @@ public interface LoginService {
 
     public int updateUser(TUser user);
     public TUser getUserById(String userId);
+    public Object getUserForm(String year , Integer departId);
 }

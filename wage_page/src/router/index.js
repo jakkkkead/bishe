@@ -16,8 +16,12 @@ import holiday_yearForm from '../views/holiday/holiday_yearForm'
 import wage_view from '../views/wage_view/wage_view'
 import item_add from '../views/item/item_add'
 import item_view from '../views/item/item_view'
+import item_form from '../views/item/item_form'
 import user_add from '../views/user/user_add'
 import user_view from '../views/user/user_view'
+import user_form from '../views/user/user_form'
+import year_map from '../views/year_totalform/year_map'
+
 //向外暴露路由器
 export default new VueRouter({
   //配置n个路由
@@ -78,6 +82,18 @@ export default new VueRouter({
      {
        path : '/user_view',
        component :user_view
+     },
+     {
+       path : '/user_form',
+       component :user_form
+     },
+     {
+       path : '/item_form',
+       component :item_form
+     },
+     {
+       path : '/year_map',
+       component :year_map
      }
 
 

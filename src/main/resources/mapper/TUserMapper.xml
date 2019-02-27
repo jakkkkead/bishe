@@ -15,6 +15,10 @@
         <result column="birthdate" property="birthdate"></result>
         <result column="post" property="post"></result>
     </resultMap>
+    <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
+        <result column="totalMan" property="value"></result>
+        <result column="monthday" property="dateType"></result>
+    </resultMap>
   <insert id="insertUser" parameterType="com.wage.bean.TUser">
       insert into t_user (user_id,name,sex,phone,email,depart_id,create_time,leave_time,status,password,birthdate,post)
       values (#{userId},#{name},#{sex},#{phone},#{email},#{departId},#{createTime},#{leaveTime},#{status},#{password},#{birthdate},#{post})
@@ -55,5 +59,21 @@
     <select id="getUserById" resultMap="userMap" >
           select * from t_user where user_id =#{id}
 
+    </select>
+    <select id="getUserForm" resultMap="formMap">
+        SELECT DATE_FORMAT(create_time,'%Y-%m') monthday,ifnull(COUNT(*),0) totalMan FROM t_user
+        <where>
+             and DATE_FORMAT(create_time,'%Y-%m') IN
+            <foreach collection="monthList" close=")" open="(" separator="," item="month">
+                #{month}
+            </foreach>
+            <if test="status !=null">
+                and status = #{status}
+            </if>
+            <if test="departId !=null">
+                and depart_id = #{departId}
+            </if>
+        </where>
+        GROUP BY monthday
     </select>
 </mapper>

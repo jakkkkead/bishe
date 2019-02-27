@@ -13,12 +13,17 @@
         <result property="payment" column="payment"></result>
         <result property="type" column="type"></result>
         <result property="payType" column="pay_type"></result>
+        <result property="area" column="area"></result>
+    </resultMap>
+    <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
+        <result column="totalValue" property="value"></result>
+        <result column="type" property="intType"></result>
     </resultMap>
     <insert id="createItem">
         insert into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
-                            pay_type)
+                            pay_type,area)
         values (#{id}, #{name}, date (#{beginTime}), date (#{endTime}), #{departId}, #{principal}, #{description},
-                #{status}, #{payment}, #{type}, #{payType})
+                #{status}, #{payment}, #{type}, #{payType},#{area})
     </insert>
     <select id="selectItem" resultMap="ItemMap">
         select * from t_item
@@ -52,8 +57,34 @@
     </select>
     <insert id="updateItem">
         replace into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
-        pay_type)
+        pay_type,area)
         values (#{id}, #{name}, date (#{beginTime}), date (#{endTime}), #{departId}, #{principal}, #{description},
-        #{status}, #{payment}, #{type}, #{payType})
+        #{status}, #{payment}, #{type}, #{payType},#{area})
     </insert>
+    <select id="getItemFormsToStatus" resultMap="formMap">
+     SELECT IFNULL(SUM(payment),0) as totalValue,status as type FROM t_item
+     <where>
+         DATE_FORMAT(begin_time,'%Y') =#{year}
+        <if test="departId !=null">
+            and depart_id =#{departId}
+        </if>
+         <if test="status !=null">
+             and status =#{status}
+         </if>
+     </where>
+     GROUP BY #{group}
+    </select>
+    <select id="getItemFormsToType" resultMap="formMap">
+        SELECT IFNULL(SUM(payment),0) as totalValue,type FROM t_item
+        <where>
+            DATE_FORMAT(begin_time,'%Y') =#{year}
+            <if test="departId !=null">
+                and depart_id =#{departId}
+            </if>
+            <if test="status !=null">
+                and status =#{status}
+            </if>
+        </where>
+        GROUP BY #{group}
+    </select>
 </mapper>

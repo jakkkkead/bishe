@@ -1,5 +1,6 @@
 package com.wage.dao;
 
+import com.wage.bean.ExpenseForms;
 import com.wage.bean.TUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,4 +15,5 @@ public interface TUserMapper {
      public Integer getUserCount(@Param("beginDate")String beginDate,@Param("endDate") String endDate);
      public Integer updateUser(TUser user);
      public TUser getUserById(@Param("id")String id);
+     public List<ExpenseForms> getUserForm(@Param("monthList")List<String> monthList,@Param("departId") Integer departId ,@Param("status") Integer status);
 }

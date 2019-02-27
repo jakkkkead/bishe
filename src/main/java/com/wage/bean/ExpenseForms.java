@@ -14,6 +14,7 @@ public class ExpenseForms implements Comparable<ExpenseForms>{
     private Long money = (long)0;
     private String type;
     private String dateType;
+    private Integer intType;
     private Long value = (long)0;
     private List<String> lastTimeList = new ArrayList<>();
     private List<String> nowTimeList = new ArrayList<>();

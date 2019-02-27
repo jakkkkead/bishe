@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class TItem {
     private String id;
-
+    private String area;
     private String name;
 
     private String beginTime;

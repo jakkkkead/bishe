@@ -1,5 +1,6 @@
 package com.wage.dao;
 
+import com.wage.bean.ExpenseForms;
 import com.wage.bean.TItem;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,6 @@ public interface TItemMapper {
     public List selectItem(@Param("beginDate") String beginDate,@Param("endDate")String endDate,@Param("index")int index,@Param("pageSize")int pageSize, @Param("departId")Integer departId);
     public int getCount(@Param("beginDate") String beginDate,@Param("endDate")String endDate,@Param("departId")Integer departId);
     public int updateItem(TItem item);
+
+    public List getItemFormsToStatus(@Param("year")String year,@Param("departId")Integer departId,@Param("status")Integer status,@Param("group")String group);
 }
