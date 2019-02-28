@@ -54,8 +54,8 @@ public class HolidayController {
 
     @RequestMapping("getHolidayForms")
     public RestResult getHolidayForms(String year, Integer departId) {
-        if(departId !=null && departId ==5){
-            departId =null;
+        if (departId != null && departId == 5) {
+            departId = null;
         }
         ExpenseForms forms = (ExpenseForms) holidayService.getHolidayForm(year, departId);
         return RestResultGenerator.createOkResult(forms);

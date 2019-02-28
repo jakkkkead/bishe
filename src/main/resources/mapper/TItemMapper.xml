@@ -17,7 +17,7 @@
     </resultMap>
     <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
         <result column="totalValue" property="value"></result>
-        <result column="type" property="intType"></result>
+        <result column="intType" property="intType"></result>
     </resultMap>
     <insert id="createItem">
         insert into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
@@ -62,7 +62,7 @@
         #{status}, #{payment}, #{type}, #{payType},#{area})
     </insert>
     <select id="getItemFormsToStatus" resultMap="formMap">
-     SELECT IFNULL(SUM(payment),0) as totalValue,status as type FROM t_item
+     SELECT IFNULL(SUM(payment),0) as totalValue,status as intType FROM t_item
      <where>
          DATE_FORMAT(begin_time,'%Y') =#{year}
         <if test="departId !=null">
@@ -72,10 +72,10 @@
              and status =#{status}
          </if>
      </where>
-     GROUP BY #{group}
+     GROUP BY intType
     </select>
     <select id="getItemFormsToType" resultMap="formMap">
-        SELECT IFNULL(SUM(payment),0) as totalValue,type FROM t_item
+        SELECT IFNULL(SUM(payment),0) as totalValue,type as intType FROM t_item
         <where>
             DATE_FORMAT(begin_time,'%Y') =#{year}
             <if test="departId !=null">
@@ -85,6 +85,6 @@
                 and status =#{status}
             </if>
         </where>
-        GROUP BY #{group}
+        GROUP BY intType
     </select>
 </mapper>

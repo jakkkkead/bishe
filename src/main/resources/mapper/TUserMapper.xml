@@ -19,6 +19,17 @@
         <result column="totalMan" property="value"></result>
         <result column="monthday" property="dateType"></result>
     </resultMap>
+    <select id="getUserInfo" resultMap="userMap">
+        select name,depart_id,post from t_user
+        <where>
+            <if test="departId !=null">
+             and   depart_id = #{departId}
+            </if>
+            <if test="status !=null">
+                and   status = #{status}
+            </if>
+        </where>
+    </select>
   <insert id="insertUser" parameterType="com.wage.bean.TUser">
       insert into t_user (user_id,name,sex,phone,email,depart_id,create_time,leave_time,status,password,birthdate,post)
       values (#{userId},#{name},#{sex},#{phone},#{email},#{departId},#{createTime},#{leaveTime},#{status},#{password},#{birthdate},#{post})

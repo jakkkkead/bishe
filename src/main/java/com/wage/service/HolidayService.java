@@ -8,5 +8,12 @@ public interface HolidayService {
     PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate);
     int checkHoliday (String holidayId,int flag , String name);
     int updateHoliday(THoliday holiday);
+
+    /**
+     * 获取假期报表数据
+     * @param year
+     * @param departId
+     * @return
+     */
     public Object getHolidayForm(String year , Integer departId);
 }

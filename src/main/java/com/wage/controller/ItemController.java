@@ -13,37 +13,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
+
 @CrossOrigin
 @RestController
 public class ItemController {
     @Autowired
     private ItemService itemService;
+
     @PostMapping("createItem")
-    public RestResult createItem(TItem item){
+    public RestResult createItem(TItem item) {
         int i = itemService.createItem(item);
-        if(i > 0 ){
+        if (i > 0) {
             return RestResultGenerator.createOkResult();
-        }else {
+        } else {
             return RestResultGenerator.createFailResult();
         }
     }
+
     @RequestMapping("getItemList")
-    public RestResult selectItem(String beginDate,String endDate,int currentPage,int pageSize,Integer departId){
-        List itemList = itemService.seleceItem(beginDate,endDate,currentPage,pageSize,departId);
-        int total = itemService.getCount(beginDate,endDate,departId);
+    public RestResult selectItem(String beginDate, String endDate, int currentPage, int pageSize, Integer departId) {
+        List itemList = itemService.seleceItem(beginDate, endDate, currentPage, pageSize, departId);
+        int total = itemService.getCount(beginDate, endDate, departId);
         PageBean pageBean = new PageBean();
         pageBean.setTotal(total);
         pageBean.setList(itemList);
         return RestResultGenerator.createOkResult(pageBean);
 
     }
+
     @RequestMapping("updateItem")
-    public RestResult updateItem(TItem item){
+    public RestResult updateItem(TItem item) {
         int i = itemService.updateItem(item);
-        if(i > 0 ){
+        if (i > 0) {
             return RestResultGenerator.createOkResult();
-        }else {
+        } else {
             return RestResultGenerator.createFailResult();
         }
+    }
+
+    @RequestMapping("getItemForm")
+    public RestResult getItemForm(String year, Integer departId) {
+        Object obj = itemService.getItemForm(year,departId);
+        return RestResultGenerator.createOkResult(obj);
     }
 }

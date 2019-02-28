@@ -80,10 +80,6 @@ const itemTypeFilter = function (val) {
     case 4 :
       return "金融";
     case 5 :
-      return "广告";
-    case 6 :
-      return "气象";
-    case 7 :
       return "其他";
     default :
       return "餐饮";

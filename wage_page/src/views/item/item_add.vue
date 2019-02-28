@@ -219,14 +219,6 @@
           },
           {
             value : 5,
-            label : '广告'
-          },
-          {
-            value : 6,
-            label : '气象'
-          },
-          {
-            value : 7,
             label : '其他'
           }
         ],

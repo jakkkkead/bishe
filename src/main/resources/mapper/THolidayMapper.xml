@@ -16,6 +16,10 @@
         <result column="totalday" property="value"></result>
         <result column="monthday" property="dateType"></result>
     </resultMap>
+    <select id="getHolidayWage" resultMap="holidayMap">
+        SELECT begin_time,end_time FROM t_holiday
+        WHERE NAME =#{name} and date_format(begin_time,'%Y-%m') = #{month} or DATE_FORMAT(end_time,'%Y-%m') = #{month}
+    </select>
     <insert id="createHoliday">
         insert into t_holiday (holiday_id,name,depart_id,type,begin_time,end_time,status,remark)
         values(#{holidayId},#{name},#{departId},#{type},date(#{beginTime}),date(#{endTime}),#{status},#{remark})

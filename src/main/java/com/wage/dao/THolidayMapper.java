@@ -14,4 +14,5 @@ public interface THolidayMapper {
       public Integer checkHoliday(@Param("holidayId") String holidayId ,@Param("status") int status ,@Param("approveName") String approveName);
       public Integer updateHoliday(THoliday holiday);
       public List getHolidayForm(@Param("monthList")List<String> monthList ,@Param("departId")Integer departId ,@Param("type") Integer type);
+      public List getHolidayWage(@Param("month") String month,@Param("name") String name);
 }

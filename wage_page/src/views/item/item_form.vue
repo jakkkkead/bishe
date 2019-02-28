@@ -1,7 +1,7 @@
 <template>
   <div>
-    <yearConditon ></yearConditon>
-    <div id ="itemChar" style="width: 100%; height:600px"></div>
+    <yearConditon v-on:fromConditon="searchData" ></yearConditon>
+    <div id ="itemChar" style="width: 100%; height:700px"></div>
   </div>
 </template>
 
@@ -19,6 +19,9 @@
               departId :""
             },
             option:{
+              title:{
+                 top: '5%'
+              },
             tooltip: {
               trigger: 'item',
               formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -26,15 +29,18 @@
             legend: {
               orient: 'vertical',
               x: 'left',
-              data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他'],
+              data:['未进行','进行中','已完成','餐饮','制造','纺织','互联网','金融','其他'],
               top:'10%'
             },
+              grid:{
+                top : '10%'
+              },
             series: [
               {
-                name:'访问来源',
+                name:'项目进度(销售额:元)',
                 type:'pie',
                 selectedMode: 'single',
-                radius: [0, '30%'],
+                radius: [0, '20%'],
 
                 label: {
                   normal: {
@@ -47,15 +53,12 @@
                   }
                 },
                 data:[
-                  {value:335, name:'直达', selected:true},
-                  {value:679, name:'营销广告'},
-                  {value:1548, name:'搜索引擎'}
                 ]
               },
               {
-                name:'访问来源',
+                name:'项目收入(元)',
                 type:'pie',
-                radius: ['40%', '55%'],
+                radius: ['30%', '40%'],
                 label: {
                   normal: {
                     formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
@@ -71,7 +74,7 @@
                     rich: {
                       a: {
                         color: '#999',
-                        lineHeight: 22,
+                        lineHeight: 10,
                         align: 'center'
                       },
                       // abg: {
@@ -89,7 +92,7 @@
                       },
                       b: {
                         fontSize: 16,
-                        lineHeight: 33
+                        lineHeight: 15
                       },
                       per: {
                         color: '#eee',
@@ -99,17 +102,7 @@
                       }
                     }
                   }
-                },
-                data:[
-                  {value:335, name:'直达'},
-                  {value:310, name:'邮件营销'},
-                  {value:234, name:'联盟广告'},
-                  {value:135, name:'视频广告'},
-                  {value:1048, name:'百度'},
-                  {value:251, name:'谷歌'},
-                  {value:147, name:'必应'},
-                  {value:102, name:'其他'}
-                ]
+                }
               }
             ]
 
@@ -118,8 +111,28 @@
           }
       },
       mounted() {
-          let mychar =this.$echarts.init(document.getElementById("itemChar"))
-          mychar.setOption(this.option)
+          this.getData()
+      },
+      methods:{
+          getData(){
+            this.axios({
+              method :'get',
+              url : 'http://localhost:8083/getItemForm?year='+this.yearCoditon.sdate+"&departId="+this.yearCoditon.departId
+            }).then((res)=>{
+              if(res.data.code ===0){
+                let mychar = this.$echarts.init(document.getElementById("itemChar"))
+                  var data = res.data.data
+                  this.option.series[0].data=data.obj[0]
+                this.option.series[1].data=data.obj[1]
+                this.option.title.text = data.date+'项目信息'
+                mychar.setOption(this.option)
+              }
+            })
+          },
+        searchData (data){
+         this.yearCoditon = data
+         this.getData()
+      }
       }
     }
 </script>

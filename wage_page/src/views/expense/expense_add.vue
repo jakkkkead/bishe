@@ -31,6 +31,12 @@
             <el-option v-for="item in typeOption" :value="item.value" :label="item.label" :key="item.value"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="创建时间">
+          <el-col :span="11">
+            <el-date-picker type="date" placeholder="起始日期" v-model="form.createTime" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
+          </el-col>
+        </el-form-item>
+
         <el-form-item label="起止时间">
           <el-col :span="11">
             <el-date-picker type="date" placeholder="起始日期" v-model="form.beginTime" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
@@ -64,6 +70,7 @@
             createName: '',
             receiverName: '',
             accountNumber: '',
+            createTime:'',
             money: 0,
             departId:'',
             payway:0,
@@ -134,7 +141,7 @@
             }
           }).then(function (res) {
              if(res.data.code == 0){
-               alert("申请成功！")
+              //alert("申请成功！")
              }else{
                alert("申请失败！")
              }

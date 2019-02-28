@@ -13,30 +13,31 @@ public class TWage {
     /**
      * 基本工资
      */
-    private Double baseWage;
+    private Double baseWage= 0.0;
 
-    private Integer workDay;
+    private Integer workDay =22;
 
-    private Integer holidayDay;
+    private Integer holidayDay =0;
 
     private String userId;
     /**
      * 社保扣除
      */
-    private Double socialPay;
+    private Double socialPay = 0.0;
     /**
      * 公积金
      */
 
-    private Double accumulationFund;
+    private Double accumulationFund = 0.0;
     /**
      * 实发工资
      */
-    private Double takePay;
+    private Double takePay = 0.0;
+    private Double holidayPay = 0.0;
 
-    private Integer status;
+    private Integer status =1;
 
-    private Date workTime;
+    private String workTime;
     private Integer departId;
 
 }

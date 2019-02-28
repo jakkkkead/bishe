@@ -23,6 +23,7 @@ public class ExpenseForms implements Comparable<ExpenseForms>{
     private List<TExpense> pieList = new ArrayList<>();
     private Object[] obj;
     private String date;
+    private List objList = new ArrayList();
 
     @Override
     public int compareTo(ExpenseForms o) {

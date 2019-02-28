@@ -16,4 +16,5 @@ public interface TItemMapper {
     public int updateItem(TItem item);
 
     public List getItemFormsToStatus(@Param("year")String year,@Param("departId")Integer departId,@Param("status")Integer status,@Param("group")String group);
+    public List getItemFormsToType(@Param("year")String year,@Param("departId")Integer departId,@Param("status")Integer status,@Param("group")String group);
 }

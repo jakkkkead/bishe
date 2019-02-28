@@ -24,9 +24,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public int addExpense(TExpense expense) {
         expense.setExpenseId(UuidUtil.getUUID());
-        expense.setStatus(0);
-        Date nowDay = new Date();
-        expense.setCreateTime(TimeUtils.formatter.get().format(nowDay));
+        expense.setStatus(1);
+//        Date nowDay = new Date();
+//        expense.setCreateTime(TimeUtils.formatter.get().format(nowDay));
         int i = expenseMapper.addExpense(expense);
         return i;
     }
@@ -133,6 +133,7 @@ public class ExpenseServiceImpl implements ExpenseService {
                 expenseForms.setDateType(month);
                 expenseList.add(expenseForms);
             }
+            return expenseList;
         }else if( list.size()>0 && list.size()<12){
             for(int i =0;i<list.size();i++){
                 if(monthList.contains(list.get(i).getDateType())){
@@ -147,8 +148,9 @@ public class ExpenseServiceImpl implements ExpenseService {
                 list.add(expenseForms);
             }
             expenseList = list;
+            return expenseList;
         }
-        return expenseList;
+        return list;
 
     }
 

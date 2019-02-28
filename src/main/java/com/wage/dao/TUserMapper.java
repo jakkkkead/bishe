@@ -16,4 +16,5 @@ public interface TUserMapper {
      public Integer updateUser(TUser user);
      public TUser getUserById(@Param("id")String id);
      public List<ExpenseForms> getUserForm(@Param("monthList")List<String> monthList,@Param("departId") Integer departId ,@Param("status") Integer status);
+     public List<TUser> getUserInfo(@Param("departId") Integer departId,@Param("status")Integer status);
 }

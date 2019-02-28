@@ -46,4 +46,46 @@ public class FormUtils {
         return expenseList;
 
     }
+
+    /**
+     * 构造Integer 类型的type
+     * @param size
+     * @return
+     */
+    public static List<Integer> getTypeList(int size){
+        List<Integer> list = new ArrayList<>();
+        for(int i =0 ; i< size;i++){
+            list.add(i);
+        }
+        return list;
+    }
+
+    /**
+     * 根据不同的业务名的标识，获取相应的业务名
+     * @param type
+     * @param name
+     * @return
+     */
+    public static String getTypeName(int type,String name){
+        String typeName ="";
+        if(name.equals("item_type")){
+            switch (type){
+                case 0:typeName="餐饮";break;
+                case 1:typeName="制造";break;
+                case 2:typeName="纺织";break;
+                case 3:typeName="互联网";break;
+                case 4:typeName="金融";break;
+                case 5:typeName="其他";break;
+                case 6:typeName="气象";break;
+                case 7:typeName="其他";break;
+            }
+        }else if(name.equals("item_status")){
+            switch (type){
+                case 0:typeName="未进行";break;
+                case 1:typeName="进行中";break;
+                case 2:typeName="已完成";break;
+            }
+        }
+        return typeName;
+    }
 }

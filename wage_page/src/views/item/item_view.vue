@@ -261,6 +261,9 @@
           {
             value: 4,
             label: '金融'
+          },{
+            value :5,
+            label:'其他'
           }
         ],
         payTypeOption: [
@@ -283,7 +286,7 @@
             label: '进行中'
           },
           {
-            value: 3,
+            value: 2,
             label: '已完成'
           }
         ]
