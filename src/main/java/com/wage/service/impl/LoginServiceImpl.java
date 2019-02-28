@@ -87,9 +87,9 @@ public class LoginServiceImpl implements LoginService {
         leaveList = FormUtils.checkYearForm(leaveList, TimeUtils.getMonths(year));
         ExpenseForms form = new ExpenseForms();
         form.setObj(new Object[2]);
-        for(int i =0 ;i<enterList.size(); i++){
+        for (int i = 0; i < enterList.size(); i++) {
             form.getNowValeList().add(enterList.get(i).getValue());
-            form.getLastValeList().add(leaveList.get(i).getValue()*(-1));
+            form.getLastValeList().add(leaveList.get(i).getValue() * (-1));
         }
         form.setNowTimeList(TimeUtils.getMonths(year));
         return form;

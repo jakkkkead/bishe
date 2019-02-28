@@ -18,9 +18,10 @@ import java.util.List;
 public class HolidayServiceImpl implements HolidayService {
     @Autowired
     private THolidayMapper holidayMapper;
+
     @Override
     public int createHoliday(THoliday holiday) {
-        int i =0;
+        int i = 0;
         String holidayId = UuidUtil.getUUID();
         holiday.setHolidayId(holidayId);
         holiday.setStatus(0);
@@ -30,9 +31,9 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate) {
-        int index = (currentPage-1)* pageSize;
-        List<THoliday> holidayList = holidayMapper.getHolidayList(index,pageSize,beginDate,endDate);
-        int total = holidayMapper.getCount(beginDate,endDate);
+        int index = (currentPage - 1) * pageSize;
+        List<THoliday> holidayList = holidayMapper.getHolidayList(index, pageSize, beginDate, endDate);
+        int total = holidayMapper.getCount(beginDate, endDate);
         PageBean pageBean = new PageBean();
         pageBean.setList(holidayList);
         pageBean.setTotal(total);
@@ -41,11 +42,11 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public int checkHoliday(String holidayId, int flag, String name) {
-        int i =0;
-        if(holidayId == null){
-            return  i;
+        int i = 0;
+        if (holidayId == null) {
+            return i;
         }
-        i = holidayMapper.checkHoliday(holidayId,flag,name);
+        i = holidayMapper.checkHoliday(holidayId, flag, name);
         return i;
     }
 
@@ -57,14 +58,14 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public Object getHolidayForm(String year, Integer departId) {
-        year =TimeUtils.getDefaultDate(year);
+        year = TimeUtils.getDefaultDate(year);
         ExpenseForms forms = new ExpenseForms();
         //初始化数组
         forms.setObj(new Object[5]);
         forms.setNowTimeList(TimeUtils.getMonths(year));
-        for(int i=0; i<5 ;i++){
-            List<ExpenseForms> list = holidayMapper.getHolidayForm(TimeUtils.getMonths(year),departId,i);
-            list = FormUtils.checkYearForm(list,TimeUtils.getMonths(year));
+        for (int i = 0; i < 5; i++) {
+            List<ExpenseForms> list = holidayMapper.getHolidayForm(TimeUtils.getMonths(year), departId, i);
+            list = FormUtils.checkYearForm(list, TimeUtils.getMonths(year));
             forms.getObj()[i] = list;
         }
 

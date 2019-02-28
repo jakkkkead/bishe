@@ -76,7 +76,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         String beginDate = null;
         String endDate = null;
         //默认计算当前月份数据
-        if (dayTime == null || dayTime.equals("null")||dayTime.equals("")) {
+        if (dayTime == null || dayTime.equals("null") || dayTime.equals("")) {
             Date day = new Date();
             dayTime = TimeUtils.formatDate(day);
         }
@@ -85,35 +85,35 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<TExpense> expenseList = new ArrayList();
         expenseList = expenseMapper.getExpenseForms(beginDate, endDate, departId);
         checkForms(expenseList);
-        ExpenseForms expenseForms =new ExpenseForms();
+        ExpenseForms expenseForms = new ExpenseForms();
         expenseForms.setPieList(expenseList);
-        expenseForms.setDate(dayTime.substring(0,7));
+        expenseForms.setDate(dayTime.substring(0, 7));
         return expenseForms;
     }
 
     @Override
     public ExpenseForms getYearExpenseForms(String year, Integer departId) {
         Date yearDate = new Date();
-        if(year ==null || year.equals("null")||year.equals("")){
+        if (year == null || year.equals("null") || year.equals("")) {
             year = TimeUtils.formatDate(yearDate);
         }
         List nowMonthList = getMonths(year);
-        List lastMonthList = getMonths(TimeUtils.addMonth(year,-12));
-        List<ExpenseForms> nowForms = expenseMapper.getYearExpenseForms(nowMonthList,departId);
-        List<ExpenseForms> lastForms = expenseMapper.getYearExpenseForms(lastMonthList,departId);
-        nowForms =  checkYearForm(nowForms,nowMonthList);
-        lastForms = checkYearForm(lastForms,lastMonthList);
+        List lastMonthList = getMonths(TimeUtils.addMonth(year, -12));
+        List<ExpenseForms> nowForms = expenseMapper.getYearExpenseForms(nowMonthList, departId);
+        List<ExpenseForms> lastForms = expenseMapper.getYearExpenseForms(lastMonthList, departId);
+        nowForms = checkYearForm(nowForms, nowMonthList);
+        lastForms = checkYearForm(lastForms, lastMonthList);
         Collections.sort(nowForms);
         Collections.sort(lastForms);
         ExpenseForms totalForms = new ExpenseForms();
-        for(int i =0 ;i<nowForms.size();i++){
+        for (int i = 0; i < nowForms.size(); i++) {
             totalForms.getNowValeList().add(nowForms.get(i).getMoney());
 
             totalForms.getLastValeList().add(lastForms.get(i).getMoney());
-          //  totalForms.getNowTimeList().add(nowForms.get(i).getDateType());
-         //   totalForms.getLastTimeList().add(lastForms.get(i).getDateType());
+            //  totalForms.getNowTimeList().add(nowForms.get(i).getDateType());
+            //   totalForms.getLastTimeList().add(lastForms.get(i).getDateType());
         }
-        totalForms.setDate(TimeUtils.getYear(year)+"年");
+        totalForms.setDate(TimeUtils.getYear(year) + "年");
         //计算饼图数据，根据类型划分
         List<TExpense> expenseList = new ArrayList();
         expenseList = expenseMapper.getExpenseForms(TimeUtils.getYearFirstDay(year), TimeUtils.getLastDayOfYear(year), departId);
@@ -121,30 +121,31 @@ public class ExpenseServiceImpl implements ExpenseService {
         totalForms.setPieList(expenseList);
         return totalForms;
     }
-    public List<ExpenseForms> checkYearForm(List<ExpenseForms> list,List<String> monthList){
+
+    public List<ExpenseForms> checkYearForm(List<ExpenseForms> list, List<String> monthList) {
         ExpenseForms expenseForms;
         List<ExpenseForms> expenseList = new ArrayList<>();
-        if(list ==null ||list.size()==0){
+        if (list == null || list.size() == 0) {
 
             list = new ArrayList<>();
-            for(String month : monthList){
+            for (String month : monthList) {
                 expenseForms = new ExpenseForms();
-                expenseForms.setMoney((long)0);
+                expenseForms.setMoney((long) 0);
                 expenseForms.setDateType(month);
                 expenseList.add(expenseForms);
             }
             return expenseList;
-        }else if( list.size()>0 && list.size()<12){
-            for(int i =0;i<list.size();i++){
-                if(monthList.contains(list.get(i).getDateType())){
+        } else if (list.size() > 0 && list.size() < 12) {
+            for (int i = 0; i < list.size(); i++) {
+                if (monthList.contains(list.get(i).getDateType())) {
                     monthList.remove(list.get(i).getDateType());
                 }
             }
 
-            for(String month : monthList){
+            for (String month : monthList) {
                 expenseForms = new ExpenseForms();
                 expenseForms.setDateType(month);
-                expenseForms.setMoney((long)0);
+                expenseForms.setMoney((long) 0);
                 list.add(expenseForms);
             }
             expenseList = list;
@@ -156,18 +157,19 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     /**
      * 得到一年当中的12个月 ： yyyy-MM
+     *
      * @param date
      * @return
      */
-    public List<String> getMonths(String date){
-        List <String> list = new ArrayList<>();
-        String firstDay =TimeUtils.getYearFirstDay(date);
+    public List<String> getMonths(String date) {
+        List<String> list = new ArrayList<>();
+        String firstDay = TimeUtils.getYearFirstDay(date);
         String firstMonth = TimeUtils.getMonthOfDay(firstDay);
         list.add(firstMonth);
-        for(int i = 0 ; i<11;i++){
-         //   String day = list.get(i);
-           String day = TimeUtils.addMonth(firstDay,i+1);
-           list.add(TimeUtils.getMonthOfDay(day));
+        for (int i = 0; i < 11; i++) {
+            //   String day = list.get(i);
+            String day = TimeUtils.addMonth(firstDay, i + 1);
+            list.add(TimeUtils.getMonthOfDay(day));
         }
         return list;
     }
