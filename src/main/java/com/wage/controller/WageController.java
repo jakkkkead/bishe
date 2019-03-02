@@ -28,4 +28,12 @@ public class WageController {
         }
 
     }
+    @RequestMapping("getWageForm")
+    public RestResult getWageForm(String month,Integer departId){
+        if (departId != null && departId == 5) {
+            departId = null;
+        }
+        Object obj = wageService.getWageForm(month,departId);
+        return RestResultGenerator.createOkResult(obj);
+    }
 }

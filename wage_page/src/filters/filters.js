@@ -98,8 +98,10 @@ const departFilter = function (val) {
       return "采购部";
     case 4 :
       return "事业部";
+    case 5:
+      return "所有"
     default :
-      return "研发部";
+      return "所有";
   }
 }
 //员工在职状态

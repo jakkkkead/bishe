@@ -21,6 +21,7 @@ import user_add from '../views/user/user_add'
 import user_view from '../views/user/user_view'
 import user_form from '../views/user/user_form'
 import year_map from '../views/year_totalform/year_map'
+import year_wage from '../views/year_totalform/year_wage'
 
 //向外暴露路由器
 export default new VueRouter({
@@ -94,6 +95,10 @@ export default new VueRouter({
      {
        path : '/year_map',
        component :year_map
+     },
+     {
+       path : '/year_wage',
+       component :year_wage
      }
 
 

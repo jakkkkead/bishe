@@ -53,7 +53,16 @@ public class ItemController {
 
     @RequestMapping("getItemForm")
     public RestResult getItemForm(String year, Integer departId) {
+        if (departId != null && departId == 5) {
+            departId = null;
+        }
         Object obj = itemService.getItemForm(year,departId);
+        return RestResultGenerator.createOkResult(obj);
+    }
+    @RequestMapping("getMapForm")
+    public RestResult getMapForm(String year) {
+       Object obj = itemService.getItemMapForm(year);
+
         return RestResultGenerator.createOkResult(obj);
     }
 }

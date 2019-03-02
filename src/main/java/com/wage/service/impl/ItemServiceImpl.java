@@ -80,6 +80,18 @@ public class ItemServiceImpl implements ItemService {
         return returnForm;
     }
 
+    @Override
+    public Object getItemMapForm(String year) {
+        year = TimeUtils.getDefaultDate(year);
+        //返回字符串格式 ： yyyy
+        String yDate = String.valueOf(TimeUtils.getYear(year));
+        List<CommomFormBean> mapList = itemMapper.getItemMapForm(yDate);
+        ExpenseForms obj = new ExpenseForms();
+        obj.setObjList(mapList);
+        obj.setDate(yDate);
+        return obj;
+    }
+
     public List<CommomFormBean> getCommFormBean(List<ExpenseForms> list, String name) {
         CommomFormBean bean;
         List<CommomFormBean> beanList = new ArrayList<>();

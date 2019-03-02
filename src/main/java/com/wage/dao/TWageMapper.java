@@ -10,5 +10,5 @@ import java.util.List;
 @Mapper
 public interface TWageMapper {
     public int insertWage(@Param("list") List<TWage> list);
-
+    public TWage getWageForm (@Param("date")String date , @Param("departId")Integer departId);
 }

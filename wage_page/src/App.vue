@@ -78,8 +78,8 @@
                 <span>年度报表统计</span>
               </template>
               <el-menu-item-group>
-                <router-link to="year_map"><el-menu-item index="6-1"><i class="el-icon-view"></i>年度报表统计</el-menu-item></router-link>
-                <el-menu-item index="6-2"><i class="el-icon-circle-plus"></i>人员变动分析</el-menu-item>
+                <router-link to="year_map"><el-menu-item index="6-1"><i class="el-icon-view"></i>项目区域报表</el-menu-item></router-link>
+                <router-link to="year_wage"><el-menu-item index="6-2"><i class="el-icon-circle-plus"></i>收入支出报表</el-menu-item></router-link>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>

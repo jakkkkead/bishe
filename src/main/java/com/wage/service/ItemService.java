@@ -10,4 +10,5 @@ public interface ItemService {
     public int getCount(String beginDate,String endDate,Integer departId);
     public int updateItem(TItem item);
     public Object getItemForm(String year,Integer departId);
+    public Object getItemMapForm(String year);
 }

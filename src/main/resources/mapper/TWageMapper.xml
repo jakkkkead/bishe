@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wage.dao.TWageMapper" >
+    <resultMap id="wageMap" type="com.wage.bean.TWage">
+        <result property="baseWage" column="baseWage"></result>
+        <result property="socialPay" column="socialPay"></result>
+        <result property="accumulationFund" column="accumulationFund"></result>
+        <result property="takePay" column="takePay"></result>
+        <result property="holidayPay" column="holidayPay"></result>
+    </resultMap>
     <insert id="insertWage">
         insert into t_wage (holiday_pay,name,base_wage,work_day,holiday_day,social_pay,accumulation_fund,take_pay,status,work_time,depart_id)
         values
@@ -9,4 +16,14 @@
              #{wage.socialPay},#{wage.accumulationFund},#{wage.takePay},#{wage.status},date(#{wage.workTime}),#{wage.departId})
         </foreach>
     </insert>
+    <select id="getWageForm" resultMap="wageMap">
+        SELECT SUM(base_wage)baseWage,SUM(social_pay)socialPay,SUM(accumulation_fund)accumulationFund,SUM(take_pay)takePay,sum(holiday_pay) holidayPay FROM t_wage
+        <where>
+            and work_time = date(#{date})
+            <if test="departId !=null">
+                and depart_id =#{departId}
+            </if>
+        </where>
+
+    </select>
 </mapper>

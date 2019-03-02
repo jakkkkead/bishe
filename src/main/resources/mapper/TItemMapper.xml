@@ -18,7 +18,17 @@
     <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
         <result column="totalValue" property="value"></result>
         <result column="intType" property="intType"></result>
+        <result column="strignName" property="type"></result>
     </resultMap>
+    <resultMap id="commomMap" type="com.wage.bean.CommomFormBean">
+        <result column="totalValue" property="value"></result>
+        <result column="strignName" property="name"></result>
+    </resultMap>
+    <select id="getItemMapForm" resultMap="commomMap">
+        SELECT SUM(payment) totalValue  ,AREA strignName  FROM t_item
+        WHERE DATE_FORMAT(begin_time,'%Y') = #{year}
+        GROUP BY strignName
+    </select>
     <insert id="createItem">
         insert into t_item (id, name, begin_time, end_time, depart_id, principal, description, status, payment, type,
                             pay_type,area)

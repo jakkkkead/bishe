@@ -1,8 +1,6 @@
 package com.wage.service.impl;
 
-import com.wage.bean.THoliday;
-import com.wage.bean.TUser;
-import com.wage.bean.TWage;
+import com.wage.bean.*;
 import com.wage.dao.THolidayMapper;
 import com.wage.dao.TUserMapper;
 import com.wage.dao.TWageMapper;
@@ -12,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WageServiceImpl implements WageService {
@@ -79,6 +79,35 @@ public class WageServiceImpl implements WageService {
 
 
     }
+
+    @Override
+    public Object getWageForm(String month, Integer departId) {
+        //yyyy-MM-dd
+        month = TimeUtils.getDefaultDate(month);
+        TWage wage = wageMapper.getWageForm(month,departId);
+        Map obj1 = getItemWage(wage);
+        Map obj2 = getItemWage(wage);
+        obj2.remove("基础工资");
+        ExpenseForms form  = new ExpenseForms();
+        form.setObj(new Object[2]);
+        form.getObj()[0] = obj1;
+        form.getObj()[1] = obj2;
+        form.setDate(TimeUtils.getMonthOfDay(month));
+        return form;
+    }
+    public Map getItemWage(TWage wage){
+        if(wage == null){
+            wage = new TWage();
+        }
+        Map<String,Double> map = new HashMap<>();
+        map.put("事假扣除",wage.getHolidayPay());
+        map.put("社保",wage.getSocialPay());
+        map.put("公积金",wage.getAccumulationFund());
+        map.put("基础工资",wage.getBaseWage());
+        map.put("实发工资",wage.getTakePay());
+        return  map;
+    }
+
 
     public int getTotalHoliday(List<THoliday> list, String date) {
         String firstDay = date + "-01";
