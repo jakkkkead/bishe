@@ -1,6 +1,6 @@
 <template>
   <div>
-    <yearConditon ></yearConditon>
+    <yearConditon v-on:fromConditon="searchData"></yearConditon>
     <div id ="itemChar" style="width: 100%; height:600px"></div>
   </div>
 </template>
@@ -106,6 +106,10 @@
             mychar.setOption(this.option)
           }
         })
+      },
+      searchData (data){
+        this.yearCoditon = data
+        this.getData()
       }
     }
   }

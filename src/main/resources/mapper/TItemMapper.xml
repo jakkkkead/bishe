@@ -18,12 +18,30 @@
     <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
         <result column="totalValue" property="value"></result>
         <result column="intType" property="intType"></result>
-        <result column="strignName" property="type"></result>
+        <result column="strignName" property="dateType"></result>
     </resultMap>
     <resultMap id="commomMap" type="com.wage.bean.CommomFormBean">
         <result column="totalValue" property="value"></result>
         <result column="strignName" property="name"></result>
     </resultMap>
+    <select id="getTotalItemPay" resultType="java.lang.Long">
+        select ifnull(sum(payment),0) from t_item
+        where begin_time between date(#{beginTime}) and date(#{endTime}) and status =1
+    </select>
+    <select id="getMonthItemForm" resultMap="formMap">
+        SELECT SUM(payment) totalValue,DATE_FORMAT(begin_time,'%Y-%m') strignName FROM t_item
+        WHERE DATE_FORMAT(begin_time,'%Y-%m') IN
+              <foreach collection="monthList" item="monthvalue" open="(" separator="," close=")">
+                  #{monthvalue}
+              </foreach>
+
+        GROUP BY strignName
+    </select>
+    <select id="getYearItemFormToDepart" resultMap="formMap">
+        SELECT SUM(payment) totalValue, depart_id as intType  FROM t_item
+        WHERE DATE_FORMAT(begin_time,'%Y') = #{year}
+        GROUP BY intType
+    </select>
     <select id="getItemMapForm" resultMap="commomMap">
         SELECT SUM(payment) totalValue  ,AREA strignName  FROM t_item
         WHERE DATE_FORMAT(begin_time,'%Y') = #{year}

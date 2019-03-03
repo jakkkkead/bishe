@@ -79,7 +79,8 @@
               </template>
               <el-menu-item-group>
                 <router-link to="year_map"><el-menu-item index="6-1"><i class="el-icon-view"></i>项目区域报表</el-menu-item></router-link>
-                <router-link to="year_wage"><el-menu-item index="6-2"><i class="el-icon-circle-plus"></i>收入支出报表</el-menu-item></router-link>
+                <router-link to="year_categery"><el-menu-item index="6-2"><i class="el-icon-view"></i>财务明细报表</el-menu-item></router-link>
+                <router-link to="year_wage"><el-menu-item index="6-3"><i class="el-icon-circle-plus"></i>财务总和报表</el-menu-item></router-link>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>

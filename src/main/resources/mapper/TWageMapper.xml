@@ -8,6 +8,46 @@
         <result property="takePay" column="takePay"></result>
         <result property="holidayPay" column="holidayPay"></result>
     </resultMap>
+    <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
+        <result column="totalValue" property="value"></result>
+        <result column="intType" property="intType"></result>
+        <result column="strignName" property="dateType"></result>
+    </resultMap>
+    <select id="getTotalWage" resultType="java.lang.Long">
+        select ifnull(SUM(base_wage),0) from t_wage
+        where work_time between date(#{beginTime}) and date(#{endTime})
+
+    </select>
+    <select id="getWageToMonth" resultMap="formMap">
+        SELECT SUM(base_wage) totalValue,DATE_FORMAT(work_time,'%Y-%m') strignName FROM t_wage
+        WHERE DATE_FORMAT(work_time,'%Y-%m') IN
+        <foreach collection="monthList" item="monthvalue" open="(" separator="," close=")">
+            #{monthvalue}
+        </foreach>
+        GROUP BY strignName
+    </select>
+    <select id="getWageToDepart" resultMap="formMap">
+        SELECT SUM(base_wage) totalValue, depart_id intType FROM t_wage
+        WHERE DATE_FORMAT(work_time,'%Y-%m') =#{year}
+        GROUP BY intType
+    </select>
+    <select id="getWageAndExpenseToDepart" resultMap="formMap">
+        SELECT SUM(w.base_wage)+SUM(e.money) totalValue,w.depart_id as intType FROM t_wage w,t_expense e
+        WHERE DATE_FORMAT(w.work_time,'%Y') = DATE_FORMAT(e.create_time,'%Y')
+          AND DATE_FORMAT(w.work_time,'%Y') =#{year} AND e.status =1
+        GROUP BY intType
+    </select>
+    <select id="getWageAndExpToMonth" resultMap="formMap">
+        SELECT SUM(w.base_wage)+SUM(e.money) totalValue,DATE_FORMAT(w.work_time,'%Y-%m') strignName FROM t_wage w,t_expense e
+        WHERE DATE_FORMAT(w.work_time,'%Y-%m') = DATE_FORMAT(e.create_time,'%Y-%m')
+          AND DATE_FORMAT(w.work_time,'%Y-%m') IN
+        <foreach collection="monthList" item="monthvalue" open="(" separator="," close=")">
+            #{monthvalue}
+        </foreach>
+         AND e.status =1
+        GROUP BY strignName
+    </select>
+
     <insert id="insertWage">
         insert into t_wage (holiday_pay,name,base_wage,work_day,holiday_day,social_pay,accumulation_fund,take_pay,status,work_time,depart_id)
         values

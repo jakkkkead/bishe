@@ -8,6 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 @Mapper
 public interface TExpenseMapper {
+    /**
+     * 查询某时间段内的报销总和
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    public Long getTotalExpense(@Param("beginTime") String beginTime ,@Param("endTime") String endTime);
 
     public int addExpense(TExpense expense);
 
@@ -42,4 +49,5 @@ public interface TExpenseMapper {
      */
     public List getExpenseForms(@Param("beginDate") String beginDate,@Param("endDate") String endDate,@Param("departId") Integer departId);
     public List getYearExpenseForms(@Param("monthList") List<String> month,@Param("departId") Integer departId);
+
 }

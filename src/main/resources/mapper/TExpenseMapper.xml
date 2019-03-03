@@ -19,6 +19,10 @@
         <result property="money" column="monthMoney"></result>
         <result property="dateType" column="monthdate"></result>
     </resultMap>
+    <select id="getTotalExpense" resultType="java.lang.Long">
+        select ifnull(sum(money),0) from t_expense
+        where create_time between date(#{beginTime}) and date(#{endTime}) and status =1
+    </select>
     <insert id="addExpense" >
         insert into t_expense (expense_id,create_name,depart_id,payway,receiver_name,account_number,begin_time,end_time,type,remark,money,create_time,status)
         values (#{expenseId},#{createName},#{departId},#{payway},#{receiverName},#{accountNumber},date(#{beginTime}),date(#{endTime}),#{type},#{remark},#{money},

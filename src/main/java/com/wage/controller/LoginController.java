@@ -104,6 +104,9 @@ public class LoginController {
     @RequestMapping("getUserForm")
     @ResponseBody
     public RestResult getUserForm(String year, Integer departId){
+        if(departId !=null && departId ==5){
+            departId = null;
+        }
         Object obj = loginService.getUserForm(year,departId);
 
         return RestResultGenerator.createOkResult(obj);
