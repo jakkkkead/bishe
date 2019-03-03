@@ -84,10 +84,13 @@ public class ExpenseServiceImpl implements ExpenseService {
         endDate = TimeUtils.getMonthLastDay(dayTime);
         List<TExpense> expenseList = new ArrayList();
         expenseList = expenseMapper.getExpenseForms(beginDate, endDate, departId);
+        //计算上月的报销总额
+        Long lastMonthTotal = expenseMapper.getTotalExpense(TimeUtils.getAddMonth(beginDate,-1),TimeUtils.getAddMonth(endDate,-1),departId);
         checkForms(expenseList);
         ExpenseForms expenseForms = new ExpenseForms();
         expenseForms.setPieList(expenseList);
         expenseForms.setDate(dayTime.substring(0, 7));
+        expenseForms.setValue(lastMonthTotal);
         return expenseForms;
     }
 

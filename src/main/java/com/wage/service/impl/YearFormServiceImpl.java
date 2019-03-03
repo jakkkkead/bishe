@@ -88,7 +88,7 @@ public class YearFormServiceImpl implements YearFormService {
         //获取总工资
         Long totalWage = wageMapper.getTotalWage(beginTime,endTime);
         //获取总报销费用
-        Long totalExp = expenseMapper.getTotalExpense(beginTime,endTime);
+        Long totalExp = expenseMapper.getTotalExpense(beginTime,endTime,null);
         //获取总项目收入
         Long totalItem = itemMapper.getTotalItemPay(beginTime,endTime);
         Long total = totalItem-totalExp-totalWage;

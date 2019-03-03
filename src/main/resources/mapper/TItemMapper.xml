@@ -26,7 +26,7 @@
     </resultMap>
     <select id="getTotalItemPay" resultType="java.lang.Long">
         select ifnull(sum(payment),0) from t_item
-        where begin_time between date(#{beginTime}) and date(#{endTime}) and status =1
+        where begin_time between date(#{beginTime}) and date(#{endTime}) and status =2
     </select>
     <select id="getMonthItemForm" resultMap="formMap">
         SELECT SUM(payment) totalValue,DATE_FORMAT(begin_time,'%Y-%m') strignName FROM t_item

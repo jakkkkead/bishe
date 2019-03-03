@@ -1,10 +1,39 @@
 <template>
   <div>
   <yearCondition v-on:fromConditon="searchData"></yearCondition>
-  <div id="yearChars" style="width: 100%; height:1200px">
-
-
+  <div id="yearChars" style="width: 100%; height:500px">
   </div>
+    <div>
+      <el-table
+        :data="tableData"
+        border
+        style="width:900px">
+        <el-table-column
+          prop="nowTotal"
+          label="费用总计(元)"
+          width="148px">
+        </el-table-column>
+        <el-table-column
+          prop="lastTotal"
+          label="去年同期总计(元)"
+          width="150px">
+        </el-table-column>
+        <el-table-column
+          prop="aveDepart"
+          label="部门平均(元)"
+          width="200px">
+        </el-table-column>
+        <el-table-column
+          prop="aveMonth"
+          label="月平均(元)"
+          width="200px">
+        </el-table-column>
+        <el-table-column
+          width="200px"
+          prop="createInc"
+          label="同比去年">
+        </el-table-column>
+      </el-table></div>
   </div>
 </template>
 
@@ -21,6 +50,15 @@
               sdate : "" ,
               departId :""
             },
+            tableData:[
+              {
+                nowTotal:0,
+                aveDepart:0,
+                aveMonth:0,
+                lastTotal:0,
+                createInc:'0.00%'
+              }
+            ],
             option :{
 
               dataset:{
@@ -32,17 +70,16 @@
                 text: '年度报销费用图'
               },
               tooltip: {
-                trigger: 'axis'
+                 trigger: 'axis'
               },
               legend: {
                 top:'5%'
                 //data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
               },
               grid: {
-                top : '10%',
+                top : '18%',
                 left: '3%',
                 right: '50%',
-                bottom: '60%',
                 containLabel: true
               },
               xAxis: {
@@ -58,6 +95,10 @@
                 {
                   type:'line',
                   data:[],
+                  tooltip:{
+                    show : true,
+                    formatter :'{a} <br> {b} : {c}'
+                  }
                   // lable :{
                   //   show : true
                   // },
@@ -75,15 +116,16 @@
                 },{
                   name :'类目占比',
                   type : 'pie',
-                  center: ['75%', '20%'],
+                  radius:'50%',
+                  center: ['75%', '50%'],
                   encode: {
                     itemName :'typeName',
                     value : 'money'
                   },
-                  radius: '20%',
-                  tooltip: {
-                    trigger :'item',
-                    // formatter: "{a} <br/>{b} :{@[1]} {d}%"
+                  tooltip:{
+                    trigger: 'item',
+                    formatter :'{a} <br> {b}:{d}%)'
+
                   },
                   label: {
                     show : true,
@@ -112,6 +154,29 @@
            this.yearCoditon = data
           this.getData()
            },
+        setTableData(now,last){
+           var nowTotal =0
+          var lastTotal = 0
+          var  createInc
+          for (var i =0 ;i<now.length ; i++){
+             nowTotal = nowTotal + now[i]
+             lastTotal = lastTotal + last[i]
+          }
+          console.log(nowTotal)
+          console.log(nowTotal)
+          this.tableData[0].nowTotal =nowTotal
+          this.tableData[0].lastTotal =lastTotal
+          this.tableData[0].aveMonth = (nowTotal/12).toFixed(2)
+          this.tableData[0].aveDepart = (nowTotal/5).toFixed(2)
+          if(lastTotal !=0){
+             createInc = ((nowTotal-lastTotal)*100).toFixed(2)+'%'
+          }else {
+            createInc = '0.00%'
+          }
+
+          this.tableData[0].createInc = createInc
+          console.log(this.tableData[0])
+        },
         getData(){
           this.axios({
             method : 'post',
@@ -123,6 +188,7 @@
               this.option.series[0].name = res.data.data.date;
               this.option.series[1].data =res.data.data.lastValeList
               this.option.series[2].name = res.data.data.date
+              this.setTableData(res.data.data.nowValeList,res.data.data.lastValeList)
               this.option.dataset.source = res.data.data.pieList
               yearChars.setOption(this.option)
 

@@ -14,7 +14,7 @@ public interface TExpenseMapper {
      * @param endTime
      * @return
      */
-    public Long getTotalExpense(@Param("beginTime") String beginTime ,@Param("endTime") String endTime);
+    public Long getTotalExpense(@Param("beginTime") String beginTime ,@Param("endTime") String endTime,@Param("departId") Integer departId);
 
     public int addExpense(TExpense expense);
 

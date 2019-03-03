@@ -72,7 +72,7 @@ public class ExpenseController {
         return RestResultGenerator.createOkResult(obj);
     }
     /**
-     *  获取报销年报表
+     *  获取报销费用年报表
      * @param year
      * @param departId
      * @return

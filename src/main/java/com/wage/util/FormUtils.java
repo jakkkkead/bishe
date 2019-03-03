@@ -76,7 +76,7 @@ public class FormUtils {
                     commonBean.setName(FormUtils.getTypeName(list.get(i).getIntType(),typeName));
                     commonBean.setValue(list.get(i).getValue());
                     commomList.add(commonBean);
-                    typeList.remove(list.get(i).getType());
+                    typeList.remove(list.get(i).getIntType());
                 }
             }
             for(Integer type : typeList){

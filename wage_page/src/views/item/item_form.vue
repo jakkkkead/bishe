@@ -1,7 +1,7 @@
 <template>
   <div>
     <yearConditon v-on:fromConditon="searchData" ></yearConditon>
-    <div id ="itemChar" style="width: 100%; height:700px"></div>
+    <div id ="itemChar" style="width: 100%; height:800px"></div>
   </div>
 </template>
 
@@ -33,7 +33,7 @@
               top:'10%'
             },
               grid:{
-                top : '10%'
+                top : '40%'
               },
             series: [
               {
