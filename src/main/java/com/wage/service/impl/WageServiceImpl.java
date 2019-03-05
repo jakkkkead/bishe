@@ -80,6 +80,12 @@ public class WageServiceImpl implements WageService {
 
     }
 
+    public Object getYearWageForm(String year,Integer departId){
+        TWage wage = wageMapper.getYearWageForm(year,departId);
+        Map yearForm = getItemWage(wage);
+        return  yearForm;
+    }
+
     @Override
     public Object getWageForm(String month, Integer departId) {
         //yyyy-MM-dd

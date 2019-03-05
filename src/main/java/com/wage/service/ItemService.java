@@ -11,4 +11,6 @@ public interface ItemService {
     public int updateItem(TItem item);
     public Object getItemForm(String year,Integer departId);
     public Object getItemMapForm(String year);
+
+    public Object getDetailMapForm(String year,String area);
 }

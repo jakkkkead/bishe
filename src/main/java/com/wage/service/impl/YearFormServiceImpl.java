@@ -6,6 +6,7 @@ import com.wage.bean.IncreateBean;
 import com.wage.dao.TExpenseMapper;
 import com.wage.dao.TItemMapper;
 import com.wage.dao.TWageMapper;
+import com.wage.service.WageService;
 import com.wage.service.YearFormService;
 import com.wage.util.FormUtils;
 import com.wage.util.TimeUtils;
@@ -22,6 +23,8 @@ public class YearFormServiceImpl implements YearFormService {
     private TItemMapper itemMapper;
     @Autowired
     private TWageMapper wageMapper;
+    @Autowired
+    private WageService wageService;
     @Autowired
     private TExpenseMapper expenseMapper;
     @Override
@@ -67,6 +70,17 @@ public class YearFormServiceImpl implements YearFormService {
         obj.setLastValeList(lastPayList);
         obj.setDate(sYear);
         obj.setObjList(getIncreateList(nowPayList,lastPayList));
+        //计算报销费用，根据类型分组
+        List<ExpenseForms> nowTypeExpList = expenseMapper.getYearExpenseToType(sYear);
+        List <CommomFormBean> expTypeCom = FormUtils.checkFormToCommBean(nowTypeExpList,FormUtils.getTypeList(4),"expense_type");
+        //计算年工资组成
+        Object wageMap = wageService.getYearWageForm(sYear,null);
+        List<ExpenseForms> itemTypeList = itemMapper.getDetailMaptoType(sYear,null);
+        List <CommomFormBean> itemTypeCom = FormUtils.checkFormToCommBean(itemTypeList,FormUtils.getTypeList(6),"item_type");
+        obj.setObj(new Object[3]);
+        obj.getObj()[0] =expTypeCom;
+        obj.getObj()[1] =wageMap;
+        obj.getObj()[2] =itemTypeCom;
         return obj;
     }
     public List<String> getIncreateList(List<Long> nowList , List<Long> lastList){

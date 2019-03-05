@@ -3,12 +3,14 @@ package com.wage.dao;
 import com.wage.bean.ExpenseForms;
 import com.wage.bean.TItem;
 
+import com.wage.bean.TWage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
 public interface TItemMapper {
+
     /**
      * 查询某个时间段内的项目收入总和
      * @param beginTime
@@ -40,4 +42,20 @@ public interface TItemMapper {
      * @return
      */
     public List <ExpenseForms> getYearItemFormToDepart( @Param("year") String year);
+
+    /**
+     * 根据部门分组，查询某地区一年的成交金额
+     * @param year
+     * @param area
+     * @return
+     */
+    public List<ExpenseForms> getDetailMapForm(@Param("year")String year ,@Param("area") String area);
+
+    /**
+     * 根据行业分组，查询某地区一年的成交金额
+     * @param year
+     * @param area
+     * @return
+     */
+    public List<ExpenseForms> getDetailMaptoType(@Param("year")String year ,@Param("area") String area);
 }

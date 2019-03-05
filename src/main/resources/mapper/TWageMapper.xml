@@ -13,6 +13,15 @@
         <result column="intType" property="intType"></result>
         <result column="strignName" property="dateType"></result>
     </resultMap>
+    <select id="getYearWageForm" resultMap="wageMap">
+        SELECT SUM(base_wage)baseWage,SUM(social_pay)socialPay,SUM(accumulation_fund)accumulationFund,SUM(take_pay)takePay,sum(holiday_pay) holidayPay FROM t_wage
+        <where>
+            and date_format(work_time,'%Y') = #{year}
+            <if test="departId !=null">
+                and depart_id =#{departId}
+            </if>
+        </where>
+    </select>
     <select id="getTotalWage" resultType="java.lang.Long">
         select ifnull(SUM(base_wage),0) from t_wage
         where work_time between date(#{beginTime}) and date(#{endTime})

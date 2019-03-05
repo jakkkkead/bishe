@@ -134,8 +134,6 @@ public class FormUtils {
                 case 3:typeName="互联网";break;
                 case 4:typeName="金融";break;
                 case 5:typeName="其他";break;
-                case 6:typeName="气象";break;
-                case 7:typeName="其他";break;
             }
         }else if(name.equals("item_status")){
             switch (type){
@@ -150,6 +148,13 @@ public class FormUtils {
                 case 2:typeName="人力资源部";break;
                 case 3:typeName="采购部";break;
                 case 4:typeName="事业部";break;
+            }
+        }else if(name.equals("expense_type")){
+            switch (type){
+                case 0:typeName="差旅";break;
+                case 1:typeName="交通";break;
+                case 2:typeName="日常";break;
+                case 3:typeName="其他";break;
             }
         }
         return typeName;

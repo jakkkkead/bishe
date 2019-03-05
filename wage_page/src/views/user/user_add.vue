@@ -138,7 +138,7 @@
           if(res.data.code == 0){
             alert("创建成功！")
           }else{
-            alert(res.data.data.msg+"已存在！")
+            alert(res.data.msg+"已存在！")
           }
         })
       }

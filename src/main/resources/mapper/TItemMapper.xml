@@ -24,6 +24,25 @@
         <result column="totalValue" property="value"></result>
         <result column="strignName" property="name"></result>
     </resultMap>
+    <select id="getDetailMapForm" resultMap="formMap">
+        SELECT ifnull(sum(payment),0) totalValue , depart_id intType from t_item
+        where DATE_FORMAT(begin_time,'%Y')=#{year}
+          <if test="area !=null">
+              and area =#{area}
+          </if>
+
+        GROUP BY intType
+
+    </select>
+    <select id="getDetailMaptoType" resultMap="formMap">
+        SELECT ifnull(sum(payment),0) totalValue , type intType from t_item
+        where DATE_FORMAT(begin_time,'%Y')=#{year}
+        <if test="area !=null">
+            and area =#{area}
+        </if>
+
+        GROUP BY intType
+    </select>
     <select id="getTotalItemPay" resultType="java.lang.Long">
         select ifnull(sum(payment),0) from t_item
         where begin_time between date(#{beginTime}) and date(#{endTime}) and status =2

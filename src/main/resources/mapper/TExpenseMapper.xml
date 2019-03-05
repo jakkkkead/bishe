@@ -19,6 +19,17 @@
         <result property="money" column="monthMoney"></result>
         <result property="dateType" column="monthdate"></result>
     </resultMap>
+    <resultMap id="formMap" type="com.wage.bean.ExpenseForms">
+        <result property="value" column="totalValue"></result>
+        <result property="intType" column="intType"></result>
+        <result property="dateType" column="strignName"></result>
+    </resultMap>
+    <select id="getYearExpenseToType" resultMap="formMap">
+        SELECT ifnull(sum(money),0) totalValue,type intType FROM t_expense
+        WHERE DATE_FORMAT(create_time,'%Y') = #{year}
+          and `status` =1
+        GROUP BY type
+    </select>
     <select id="getTotalExpense" resultType="java.lang.Long">
         select ifnull(sum(money),0) from t_expense
         where create_time between date(#{beginTime}) and date(#{endTime}) and status =1

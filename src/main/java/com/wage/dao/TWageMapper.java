@@ -11,6 +11,20 @@ import java.util.List;
 @Mapper
 public interface TWageMapper {
     public int insertWage(@Param("list") List<TWage> list);
+    /**
+     * 获取年工资，分成各个工资部分
+     * @param year ：yyyy
+     * @param departId
+     * @return
+     */
+    public TWage getYearWageForm(@Param("year") String year,@Param("departId") Integer departId);
+
+    /**
+     * 获取每月的工资，有工资各部门组成
+     * @param date :yyyy-MM-01
+     * @param departId
+     * @return
+     */
     public TWage getWageForm (@Param("date")String date , @Param("departId")Integer departId);
 
     /**

@@ -9,6 +9,12 @@ import java.util.List;
 @Mapper
 public interface TExpenseMapper {
     /**
+     * 获取每年报销总和，根据类型分组
+     * @param year
+     * @return
+     */
+    public List getYearExpenseToType(@Param("year") String year);
+    /**
      * 查询某时间段内的报销总和
      * @param beginTime
      * @param endTime

@@ -9,6 +9,7 @@ import com.wage.util.FormUtils;
 import com.wage.util.ListUtils;
 import com.wage.util.TimeUtils;
 import com.wage.util.UuidUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
-    private TItemMapper itemMapper;
+    private  TItemMapper itemMapper;
 
     @Override
     public int createItem(TItem item) {
@@ -87,9 +88,36 @@ public class ItemServiceImpl implements ItemService {
         String yDate = String.valueOf(TimeUtils.getYear(year));
         List<CommomFormBean> mapList = itemMapper.getItemMapForm(yDate);
         ExpenseForms obj = new ExpenseForms();
+        Object detail = getDetailMapForm(yDate,null);
+        obj.setObj(new Object[1]);
+        obj.getObj()[0] = detail;
         obj.setObjList(mapList);
         obj.setDate(yDate);
         return obj;
+    }
+
+    @Override
+    public Object getDetailMapForm(String year, String area) {
+        if(year.length() > 5){
+            year = year.substring(0,4);
+        }
+        List<ExpenseForms> depForms = itemMapper.getDetailMapForm(year,area);
+        depForms = checkItemForm(depForms,FormUtils.getTypeList(5));
+        ExpenseForms reObj = new ExpenseForms();
+        ListUtils.sort(depForms, true, "value");
+        for(ExpenseForms obj : depForms){
+            String name = FormUtils.getTypeName(obj.getIntType(),"depart");
+            Long value =obj.getValue();
+            reObj.getNowValeList().add(value);
+            reObj.getNowTimeList().add(name);
+        }
+        List<ExpenseForms> typeForms = itemMapper.getDetailMaptoType(year,area);
+        typeForms =checkItemForm(typeForms,FormUtils.getTypeList(6));
+        List<CommomFormBean> typeCommomForm = getCommFormBean(typeForms,"item_type");
+        reObj.getObjList().add(typeCommomForm);
+        reObj.setDate(year);
+        reObj.setArea(area);
+        return reObj;
     }
 
     public List<CommomFormBean> getCommFormBean(List<ExpenseForms> list, String name) {

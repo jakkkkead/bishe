@@ -65,4 +65,10 @@ public class ItemController {
 
         return RestResultGenerator.createOkResult(obj);
     }
+    @RequestMapping("getDetailMapForm")
+    public RestResult getDetailMapForm(String year , String area) {
+        Object obj = itemService.getDetailMapForm(year,area);
+
+        return RestResultGenerator.createOkResult(obj);
+    }
 }
