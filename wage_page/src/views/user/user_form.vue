@@ -1,7 +1,7 @@
 <template>
   <div>
     <yearConditon v-on:fromConditon="searchData"></yearConditon>
-    <div id ="userChar" style="width: 100%; height:400px"></div>
+    <div id ="userChar" style="width: 100%; height:500px"></div>
     <div id="table">
       <el-table
         :data="tableData"
@@ -25,18 +25,18 @@
         </el-table-column>
         <el-table-column
           prop="totalInc"
-          label="净增率"
+          label="月平均净增数"
           width="150px">
         </el-table-column>
         <el-table-column
           width="150px"
           prop="enterInc"
-          label="入职率">
+          label="月平均入职数">
         </el-table-column>
         <el-table-column
           width="150px"
           prop="leaveInc"
-          label="离职率">
+          label="月平均离职数">
         </el-table-column>
       </el-table>
     </div>
@@ -74,13 +74,12 @@
                   }
                 },
                 legend: {
-                  data:['入职', '离职'],
-                  right :'10%'
+                  left:'50%'
                 },
                 grid: {
-                  top :'5%',
+                  top :'10%',
                   left: '3%',
-                  right: '10%',
+                  right: '40%',
                   bottom: '1%',
                   containLabel: true
                 },
@@ -119,6 +118,69 @@
                       }
                     },
                     data:[]
+                  },
+                  {
+                    name: '在职人数',
+                    type: 'pie',
+                    radius : ['21%','26%'],
+                    center: ['80%', '20%'],
+                    hoverAnimation:false,
+                    data:[
+                      {value:0, name:'在职人数'}
+                    ],
+                    label: {
+                      normal: {
+                        show:true,
+                        position:'center',
+                        formatter:'{b} : {c}',
+                        textStyle: {
+                          fontSize: 15,
+                          color: '#235894'
+                        }
+                      }
+                    }
+                  },
+                  {
+                    name: '净增人数',
+                    type: 'pie',
+                    radius : ['21%','26%'],
+                    center: ['80%', '50%'],
+                    hoverAnimation:false,
+                    data:[
+                      {value:0, name:'净增人数'}
+                    ],
+                    label: {
+                      normal: {
+                        show:true,
+                        position:'center',
+                        formatter:'{b} : {c}',
+                        textStyle: {
+                          fontSize: 15,
+                          color: '#235894'
+                        }
+                      }
+                    }
+                  },
+                  {
+                    name: '离职率',
+                    type: 'pie',
+                    radius : ['21%','26%'],
+                    center: ['80%', '80%'],
+                    hoverAnimation:false,
+                    data:[
+                      {value:21, name:'离职率'}
+                    ],
+                    label: {
+                      normal: {
+                        show:true,
+                        position:'center',
+                        formatter:'{b} : {c}%',
+                        textStyle: {
+                          fontSize: 14,
+                          color: '#235894'
+                        }
+                      }
+                    }
                   }
                 ]
               }
@@ -139,7 +201,7 @@
                     this.option.series[0].data = res.data.data.nowValeList
                   this.option.series[1].data = res.data.data.lastValeList
                   this.option.yAxis[0].data = res.data.data.nowTimeList
-                  this.getTableData(res.data.data.nowValeList,res.data.data.lastValeList)
+                  this.getTableData(res.data.data.nowValeList,res.data.data.lastValeList,res.data.data.value)
                   myChar.setOption(this.option)
                 }
             })
@@ -148,20 +210,23 @@
           this.yearCoditon = data
           this.getData()
         },
-        getTableData(enterData,leaveData){
+        getTableData(enterData,leaveData,total){
+        //    console.log(total)
           var enter=0
           var leave = 0
             for(var i =0 ; i<enterData.length;i++){
               enter=enterData[i]+enter
-              leave = leaveData[i]+leave
+              leave = leaveData[i]+leave//负数
             }
           this.tableData[0].enterTotal =enter
           this. tableData[0].leaveTotal =leave
           this. tableData[0].total = enter+leave
-          this.tableData[0].enterInc = (( enter/12)*100).toFixed(2)+"%"
-          this.tableData[0].leaveInc = ((leave/-12)*100).toFixed(2)+"%"
-          this.tableData[0].totalInc =((this. tableData[0].total/12)*100).toFixed(2)+"%"
-          console.log(this.tableData[0])
+          this.tableData[0].enterInc = ( enter/12).toFixed(2)
+          this.tableData[0].leaveInc = (-leave/12).toFixed(2)
+          this.tableData[0].totalInc =((this. tableData[0].total/12)).toFixed(2)
+          this.option.series[2].data[0].value = total
+          this.option.series[3].data[0].value = this. tableData[0].total
+          this.option.series[4].data[0].value = ((leave/-total)*100).toFixed(2)
 
         }
       }

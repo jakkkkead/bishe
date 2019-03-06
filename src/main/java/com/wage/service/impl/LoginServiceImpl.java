@@ -92,6 +92,9 @@ public class LoginServiceImpl implements LoginService {
             form.getLastValeList().add(leaveList.get(i).getValue() * (-1));
         }
         form.setNowTimeList(TimeUtils.getMonths(year));
+        //计算一年的总在职员工数
+        Long total = tUserMapper.getTotalUser(TimeUtils.getFirstDayOfYear(year),departId);
+        form.setValue(total);
         return form;
     }
 }

@@ -17,4 +17,12 @@ public interface TUserMapper {
      public TUser getUserById(@Param("id")String id);
      public List<ExpenseForms> getUserForm(@Param("monthList")List<String> monthList,@Param("departId") Integer departId ,@Param("status") Integer status);
      public List<TUser> getUserInfo(@Param("departId") Integer departId,@Param("status")Integer status);
+
+     /**
+      * 计算一年的总员工数
+      * @param dateTime ：yyyy-MM-dd
+      * @param departId
+      * @return
+      */
+     public Long getTotalUser(@Param("dateTime")String dateTime,@Param("departId")Integer departId);
 }

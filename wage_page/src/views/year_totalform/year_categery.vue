@@ -65,11 +65,12 @@
                 top:'3%'
               },
               tooltip: {
-                trigger:'item'
+                // trigger:'item'
+                // trigger:'axis'
               },
               legend: {
                 top:'3%',
-                right: '5%'
+                right: '20%'
               },
               grid: [{
                 top: '10%',
@@ -142,7 +143,7 @@
                   }
                 }],
               radar: {
-                radius :'30%',
+                radius :'35%',
                 center: ['22%', '35%'],
               //  shape: 'circle',
                 name: {
@@ -182,13 +183,11 @@
                   // }
               },
                 {
+                  name:'费用报销',
                   type:'line',
                   xAxisIndex:0,
                   yAxisIndex:0,
                   data:[],
-                  lable :{
-                    show : true
-                  },
                   itemStyle : { normal: {label : {show: true}}}
                   // tooltip: {
                   //   trigger:'axis',
@@ -196,6 +195,7 @@
                   // }
                 },
                 {
+                  name:'工资',
                   type:'line',
                   xAxisIndex:1,
                   yAxisIndex:1,
@@ -207,15 +207,22 @@
                   //  }
                 },
                 {
+                  name:'项目',
                   type:'line',
                   xAxisIndex:2,
                   yAxisIndex:2,
                   data:[],
                   itemStyle : { normal: {label : {show: true}}}
-                  // tooltip: {
-                  //   trigger:'axis',
-                  //   formatter:'{a} <br> {b}:{c}元'
-                  // }
+                },
+                {
+                  name: '业务指标',
+                  radius:'39%',
+                  center : ['22%', '80%'],
+                  max:300000,
+                  min:-300000,
+                  type: 'gauge',
+                  detail: {formatter:'{value}%'},
+                  data: [{value: 300002, name: '完成率'},{value: -20, name: '成交率'}]
                 }
 
 
