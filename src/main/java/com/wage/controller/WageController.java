@@ -3,9 +3,13 @@ package com.wage.controller;
 import com.wage.bean.RestResult;
 import com.wage.bean.RestResultGenerator;
 import com.wage.service.WageService;
+import com.wage.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 @RestController
 public class WageController {
@@ -26,6 +30,22 @@ public class WageController {
         }catch (Exception e){
             return RestResultGenerator.createFailResult();
         }
+
+    }
+    @Scheduled( cron ="0 0 0 1 * ?")
+    public RestResult AotuCaculateWage(){
+        String date = TimeUtils.formatDate(new Date());
+        //计算上月一号日期
+        String lastMonthFirstDay = TimeUtils.getAddMonth(date,-1);
+        //计算上月最后一天
+        String lastMonthEndDay = TimeUtils.getAddDate(date,-1);
+        try{
+            caculateWageByHand(lastMonthFirstDay,lastMonthEndDay);
+            return RestResultGenerator.createOkResult("工资自动计算成功");
+        }catch (Exception e){
+            return RestResultGenerator.createFailResult("工资自动计算失败");
+        }
+
 
     }
     @RequestMapping("getWageForm")

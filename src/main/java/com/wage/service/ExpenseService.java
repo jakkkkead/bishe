@@ -14,7 +14,7 @@ public interface ExpenseService {
      * @param pageSize
      * @return
      */
-    public List getExpense(String beginTime ,String endTime,String name, int currentPage,int pageSize);
+    public List getExpense(String beginTime ,String endTime,String name, int currentPage,int pageSize,Integer departId);
 
     /**
      * 获取总记录数
@@ -23,7 +23,7 @@ public interface ExpenseService {
      * @param name
      * @return
      */
-    public Integer getExpenseCount(String beginTime ,String endTime,String name);
+    public Integer getExpenseCount(String beginTime ,String endTime,String name,Integer departId);
     public List searchExpense(String beginTime ,String endTime,String name, int currentPage,int pageSize);
 
     /**

@@ -26,9 +26,9 @@ public class ExpenseController {
     }
     @RequestMapping("getExpense")
     @ResponseBody
-    public RestResult getExpense(int currentPage, int pageSize, String beginDate, String endDate){
-        List<TExpense> list = expenseService.getExpense(beginDate,endDate,null,currentPage,pageSize);
-        Integer count = expenseService.getExpenseCount(beginDate,endDate,null);
+    public RestResult getExpense(int currentPage, int pageSize, String beginDate, String endDate,Integer departId){
+        List<TExpense> list = expenseService.getExpense(beginDate,endDate,null,currentPage,pageSize,departId);
+        Integer count = expenseService.getExpenseCount(beginDate,endDate,null,departId);
         PageBean object = new PageBean();
         object.setList(list);
         object.setTotal(count);

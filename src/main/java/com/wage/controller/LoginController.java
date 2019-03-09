@@ -60,14 +60,17 @@ public class LoginController {
      */
     @RequestMapping("getUsers")
     @ResponseBody
-    public RestResult getUserInfo(int currentPage,int pageSize,String beginDate,String endDate){
+    public RestResult getUserInfo(int currentPage,int pageSize,String beginDate,String endDate,Integer departId){
+        if(departId !=null && departId ==5){
+            departId = null;
+        }
         if(beginDate.equals("")){
             beginDate =null;
         }
         if(endDate.equals("")){
             endDate =null;
         }
-        PageBean obj = loginService.getUsers(currentPage,pageSize,beginDate,endDate);
+        PageBean obj = loginService.getUsers(currentPage,pageSize,beginDate,endDate,departId);
         return RestResultGenerator.createOkResult(obj);
 
     }

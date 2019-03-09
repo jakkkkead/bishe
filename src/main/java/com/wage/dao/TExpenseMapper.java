@@ -33,7 +33,7 @@ public interface TExpenseMapper {
      * @param pageSize
      * @return
      */
-    public List selectExpense(@Param("beginTime") String beginTime , @Param("endTime")String endTime,@Param("name") String name, @Param("currentIndex")int currentIndex, @Param("pageSize")int pageSize);
+    public List selectExpense(@Param("beginTime") String beginTime , @Param("endTime")String endTime,@Param("name") String name, @Param("currentIndex")int currentIndex, @Param("pageSize")int pageSize,@Param("departId") Integer departId);
 
     /**
      * 获取费用数据总条目数
@@ -42,7 +42,7 @@ public interface TExpenseMapper {
      * @param name
      * @return
      */
-    public Integer getExpensCount(@Param("beginTime")String beginTime ,@Param("endTime")String endTime,@Param("name")String name);
+    public Integer getExpensCount(@Param("beginTime")String beginTime ,@Param("endTime")String endTime,@Param("name")String name,@Param("departId")Integer departId);
     public List searchExpense(@Param("beginTime") String beginTime , @Param("endTime")String endTime,@Param("name") String name, @Param("currentIndex")int currentIndex, @Param("pageSize")int pageSize);
     public int updateExpense(TExpense expense);
     public TExpense getExpenseById(@Param("expenseId") String expenseId);

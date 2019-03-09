@@ -1,21 +1,7 @@
 <template>
   <div>
     <h4>审批请假单</h4>
-  <el-form id="seach_form">
-    <el-date-picker
-      type="date"
-      v-model="sdate"
-      value-format="yyyy-MM-dd"
-      placeholder="起始日期">
-    </el-date-picker>--
-    <el-date-picker
-      type="date"
-      v-model="edate"
-      value-format="yyyy-MM-dd"
-      placeholder="结束日期">
-    </el-date-picker>
-    <el-button icon="el-icon-search" circle @click="searchData"></el-button>
-  </el-form>
+    <dateAndDepart v-on:fromConditon="searchData" style="padding-bottom: 20px"></dateAndDepart>
     <el-table
       :data="tableData2"
       border
@@ -84,8 +70,12 @@
 </template>
 
 <script>
+  import dateAndDepart from '../../common/date_depart'
     export default {
         name: "expense_view",
+      components:{
+        dateAndDepart
+      },
       data() {
         return {
           tableData2: [{
@@ -98,8 +88,11 @@
             remark: '',
             status:''
           }],
-          sdate :'',
-          edate :'',
+          Conditons:{
+            sdate : "" ,
+            edate :"",
+            departId:''
+          },
           currentPage:1,
           total : 10,
           pageSize : 5
@@ -109,7 +102,7 @@
             getData(){
               this.axios({
                 method : 'get',
-                url : 'http://localhost:8083/getHolidayList?currentPage='+ this.currentPage + '&pageSize=' + this.pageSize + '&beginDate=' + this.sdate + '&endDate=' + this.edate
+                url : 'http://localhost:8083/getHolidayList?currentPage='+ this.currentPage + '&pageSize=' + this.pageSize + '&beginDate=' + this.Conditons.sdate + '&endDate=' + this.Conditons.edate+'&departId='+this.Conditons.departId
               }).then((res)=>{
                 if(res.data.code == 0){
                   this.tableData2 = res.data.data.list
@@ -139,6 +132,10 @@
             },
             handleCurrentChange(val){
               this.currentPage = val
+              this.getData()
+            },
+            searchData (data){
+              this.Conditons = data
               this.getData()
             }
           },

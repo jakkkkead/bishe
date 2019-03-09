@@ -35,7 +35,7 @@ public interface LoginService {
      * @param endDate
      * @return
      */
-    public PageBean getUsers(int currentPage, int pageSize, String beginDate, String endDate);
+    public PageBean getUsers(int currentPage, int pageSize, String beginDate, String endDate,Integer departId);
 
     public int updateUser(TUser user);
     public TUser getUserById(String userId);

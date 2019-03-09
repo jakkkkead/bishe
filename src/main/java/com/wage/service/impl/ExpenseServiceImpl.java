@@ -6,6 +6,7 @@ import com.wage.dao.TExpenseMapper;
 import com.wage.service.ExpenseService;
 import com.wage.util.TimeUtils;
 import com.wage.util.UuidUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,24 +33,24 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List getExpense(String beginTime, String endTime, String name, int currentPage, int pageSize) {
+    public List getExpense(String beginTime, String endTime, String name, int currentPage, int pageSize,Integer departId) {
         int currentIndex = (currentPage - 1) * pageSize;
-        List<TExpense> expenseList = expenseMapper.selectExpense(beginTime, endTime, name, currentIndex, pageSize);
+        List<TExpense> expenseList = expenseMapper.selectExpense(beginTime, endTime, name, currentIndex, pageSize,departId);
         return expenseList;
     }
 
     @Override
-    public Integer getExpenseCount(String beginTime, String endTime, String name) {
+    public Integer getExpenseCount(String beginTime, String endTime, String name,Integer departId) {
         Integer count = 0;
-        count = expenseMapper.getExpensCount(beginTime, endTime, name);
+        count = expenseMapper.getExpensCount(beginTime, endTime, name,departId);
         return count;
     }
 
     @Override
     public List searchExpense(String beginTime, String endTime, String name, int currentPage, int pageSize) {
         int currentIndex = (currentPage - 1) * pageSize;
-        List<TExpense> expenseList = expenseMapper.selectExpense(beginTime, endTime, name, currentIndex, pageSize);
-        return expenseList;
+       // List<TExpense> expenseList = (List<TExpense>) expenseMapper.selectExpense(beginTime, endTime, name, currentIndex, pageSize);
+        return null;
     }
 
     @Override

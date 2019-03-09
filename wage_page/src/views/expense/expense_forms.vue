@@ -14,7 +14,7 @@
       </el-table-column>
       <el-table-column
         prop="aveDepart"
-        label="部门平均(元)"
+        label="类目平均(元)"
         width="150px">
       </el-table-column>
       <el-table-column
@@ -169,9 +169,10 @@
           for (var i =0 ;i<data.length;i++){
              nowTotal = nowTotal+data[i].money
           }
-          console.log(nowTotal)
+        //  console.log(nowTotal)
           this.tableData[0].nowTotal = nowTotal
-          this.tableData[0].aveDepart = (nowTotal/12).toFixed(2)
+          //费用平均
+          this.tableData[0].aveDepart = (nowTotal/5).toFixed(2)
           this.tableData[0].aveDay = (nowTotal/30).toFixed(2)
           this.tableData[0].lastMonthTotal = last
           if(last != 0){

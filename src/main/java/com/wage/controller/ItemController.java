@@ -32,6 +32,9 @@ public class ItemController {
 
     @RequestMapping("getItemList")
     public RestResult selectItem(String beginDate, String endDate, int currentPage, int pageSize, Integer departId) {
+        if(departId !=null && departId ==5){
+            departId = null;
+        }
         List itemList = itemService.seleceItem(beginDate, endDate, currentPage, pageSize, departId);
         int total = itemService.getCount(beginDate, endDate, departId);
         PageBean pageBean = new PageBean();

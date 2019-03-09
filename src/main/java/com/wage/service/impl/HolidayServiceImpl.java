@@ -30,10 +30,10 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate) {
+    public PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate,Integer departId) {
         int index = (currentPage - 1) * pageSize;
-        List<THoliday> holidayList = holidayMapper.getHolidayList(index, pageSize, beginDate, endDate);
-        int total = holidayMapper.getCount(beginDate, endDate);
+        List<THoliday> holidayList = holidayMapper.getHolidayList(index, pageSize, beginDate, endDate,departId);
+        int total = holidayMapper.getCount(beginDate, endDate,departId);
         PageBean pageBean = new PageBean();
         pageBean.setList(holidayList);
         pageBean.setTotal(total);
@@ -68,7 +68,7 @@ public class HolidayServiceImpl implements HolidayService {
             list = FormUtils.checkYearForm(list, TimeUtils.getMonths(year));
             forms.getObj()[i] = list;
         }
-
+        forms.setDate(String.valueOf(TimeUtils.getYear(year)));
         return forms;
     }
 }

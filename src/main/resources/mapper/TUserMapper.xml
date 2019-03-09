@@ -50,6 +50,9 @@
               <if test="endDate !=null and endDate!='null'">
                 and  create_time <![CDATA[<=]]> date(#{endDate})
               </if>
+              <if test="departId !=null ">
+                  and  depart_id =#{departId}
+              </if>
           </where>
           limit #{index},#{pageSize}
     </select>
@@ -61,6 +64,9 @@
             </if>
             <if test="endDate !=null and endDate!='null'">
                 and  create_time <![CDATA[<=]]> date(#{endDate})
+            </if>
+            <if test="departId !=null ">
+                and  depart_id =#{departId}
             </if>
         </where>
     </select>
@@ -90,9 +96,11 @@
     </select>
     <select id="getTotalUser" resultType="java.lang.Long">
         select ifnull(count(*),0) from t_user
-        <where><if test="departId !=null">
+        <where>
+             create_time <![CDATA[<=]]> date(#{dateTime}) and status =1
+            <if test="departId !=null">
             and depart_id = #{departId}
-        </if>
+           </if>
         </where>
 
     </select>

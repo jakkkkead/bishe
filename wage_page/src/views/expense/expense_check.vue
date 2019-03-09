@@ -1,21 +1,7 @@
 <template>
   <div>
     <h4>审核报销单</h4>
-    <el-form id="seach_form">
-      <el-date-picker
-        type="date"
-        v-model="sdate"
-        value-format="yyyy-MM-dd"
-        placeholder="起始日期">
-      </el-date-picker>--
-      <el-date-picker
-        type="date"
-        v-model="edate"
-        value-format="yyyy-MM-dd"
-        placeholder="结束日期">
-      </el-date-picker>
-      <el-button icon="el-icon-search" circle @click="getData"></el-button>
-    </el-form>
+    <dateAndDepart v-on:fromConditon="searchData" style="padding-bottom: 20px"></dateAndDepart>
   <el-table
     :data="tableData2"
     border
@@ -93,13 +79,20 @@
 </template>
 
 <script>
+  import dateAndDepart from '../../common/date_depart'
   var baseUrl = 'http://localhost:8083'
   export default {
     name: "expense_view",
+    components:{
+      dateAndDepart
+    },
     data() {
       return {
-        sdate : '' ,
-        edate :'',
+        Conditons:{
+          sdate : "" ,
+          edate :"",
+          departId:''
+        },
         tableData2: [{
           expenseId:'',
           createName: '',
@@ -127,7 +120,7 @@
       getData(){
         this.axios({
           method : 'get',
-          url : baseUrl+'/getExpense?currentPage='+this.currentPage+'&pageSize='+this.pageSize+'&beginDate='+this.sdate+'&endDate='+this.edate
+          url : baseUrl+'/getExpense?currentPage='+this.currentPage+'&pageSize='+this.pageSize+'&beginDate='+this.Conditons.sdate+'&endDate='+this.Conditons.edate+'&departId='+this.Conditons.departId
         }).then((res) =>{
           this.tableData2 = res.data.data.list
           this.total = res.data.data.total
@@ -147,6 +140,10 @@
               alert("审核失败！")
             }
         })
+      },
+      searchData (data){
+        this.Conditons = data
+        this.getData()
       }
     },
     mounted() {
@@ -166,8 +163,5 @@
   #pagination{
     margin-top: 30px;
     margin-left: 200px;
-  }
-  #seach_form{
-    margin-bottom: 50px;
   }
 </style>

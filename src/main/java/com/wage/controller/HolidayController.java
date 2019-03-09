@@ -24,8 +24,11 @@ public class HolidayController {
     }
 
     @RequestMapping("getHolidayList")
-    public RestResult getHolidayList(int currentPage, int pageSize, String beginDate, String endDate) {
-        PageBean pageBean = holidayService.getHolidayList(currentPage, pageSize, beginDate, endDate);
+    public RestResult getHolidayList(int currentPage, int pageSize, String beginDate, String endDate,Integer departId) {
+        if(departId !=null && departId ==5){
+            departId =null;
+        }
+        PageBean pageBean = holidayService.getHolidayList(currentPage, pageSize, beginDate, endDate,departId);
 
         return RestResultGenerator.createOkResult(pageBean);
     }
@@ -33,6 +36,7 @@ public class HolidayController {
     @RequestMapping("checkHoliday")
     public RestResult checkHoliday(String holidayId, int flag, HttpSession session) {
         TUser user = (TUser) session.getAttribute("user");
+        //flag 表示同意，2表示拒绝
         int i = holidayService.checkHoliday(holidayId, flag, null);
         if (i > 0) {
             return RestResultGenerator.createOkResult();

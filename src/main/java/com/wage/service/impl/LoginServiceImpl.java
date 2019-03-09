@@ -53,11 +53,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public PageBean getUsers(int currentPage, int pageSize, String beginDate, String endDate) {
+    public PageBean getUsers(int currentPage, int pageSize, String beginDate, String endDate,Integer departId) {
         int index = (currentPage - 1) * pageSize;
-        List<TUser> userList = tUserMapper.getUsersList(index, pageSize, beginDate, endDate);
+        List<TUser> userList = tUserMapper.getUsersList(index, pageSize, beginDate, endDate, departId);
         int total = 0;
-        total = tUserMapper.getUserCount(beginDate, endDate);
+        total = tUserMapper.getUserCount(beginDate, endDate,departId);
         PageBean obj = new PageBean();
         obj.setList(userList);
         obj.setTotal(total);
@@ -93,7 +93,7 @@ public class LoginServiceImpl implements LoginService {
         }
         form.setNowTimeList(TimeUtils.getMonths(year));
         //计算一年的总在职员工数
-        Long total = tUserMapper.getTotalUser(TimeUtils.getFirstDayOfYear(year),departId);
+        Long total = tUserMapper.getTotalUser(TimeUtils.getLastDayOfYear(year),departId);
         form.setValue(total);
         return form;
     }

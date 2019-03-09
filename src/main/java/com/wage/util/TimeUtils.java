@@ -969,9 +969,9 @@ public class TimeUtils {
     }
 
     /**
-     * @Description: 将日期格式转化成"yyyy-MM-dd"字符串格式
-     * @param:
-     * @date: 2018/12/26 20:18
+     * 将日期格式转为字符串：yyyy-MM-dd
+     * @param date
+     * @return
      */
     public static String formatDate(Date date){
         return dayFormatter.get().format(date);

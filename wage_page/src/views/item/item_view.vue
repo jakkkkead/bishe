@@ -302,10 +302,10 @@
             this.form = res.data.data.list
             this.total = res.data.data.total
           } else {
-            alert("获取请假数据失败！")
+            alert("获取项目数据失败！")
           }
         }).catch(reason => {
-          window.location.href="http://localhost:8083/tologin"
+          alert("获取项目数据失败！")
         })
       },
       searchData() {

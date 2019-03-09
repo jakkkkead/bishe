@@ -5,7 +5,7 @@ import com.wage.bean.THoliday;
 
 public interface HolidayService {
     int createHoliday(THoliday holiday);
-    PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate);
+    PageBean getHolidayList(int currentPage, int pageSize, String beginDate, String endDate,Integer departId);
     int checkHoliday (String holidayId,int flag , String name);
     int updateHoliday(THoliday holiday);
 

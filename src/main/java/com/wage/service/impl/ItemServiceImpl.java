@@ -32,9 +32,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List seleceItem(String beginDate, String endDate, int currentPage, int pageSize, Integer departId) {
-        if (departId == 5) {
-            departId = null;
-        }
         int index = (currentPage - 1) * pageSize;
         List<TItem> itemList = itemMapper.selectItem(beginDate, endDate, index, pageSize, departId);
         return itemList;
@@ -42,9 +39,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int getCount(String beginDate, String endDate, Integer departId) {
-        if (departId == 5) {
-            departId = null;
-        }
         int total = 0;
         total = itemMapper.getCount(beginDate, endDate, departId);
         return total;

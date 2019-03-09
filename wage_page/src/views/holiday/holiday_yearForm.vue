@@ -27,8 +27,7 @@
                 }
               },
               title: {
-                top : '4%',
-                text: '请假图表'
+                top : '4%'
               },
               legend: {
                 top : '7%',
@@ -94,7 +93,7 @@
                     data : [
                       // [{type : 'min'}, {type : 'max'}]
                       {
-                        name: '平均线',
+                        name: '事假',
                         // 支持 'average', 'min', 'max'
                         type: 'average'
 
@@ -116,7 +115,7 @@
                     data : [
                       // [{type : 'min'}, {type : 'max'}]
                       {
-                        name: '平均线',
+                        name: '婚假',
                         // 支持 'average', 'min', 'max'
                         type: 'average'
 
@@ -138,7 +137,7 @@
                     data : [
                       // [{type : 'min'}, {type : 'max'}]
                       {
-                        name: '平均线',
+                        name: '产假',
                         // 支持 'average', 'min', 'max'
                         type: 'average'
 
@@ -160,7 +159,7 @@
                     data : [
                       // [{type : 'min'}, {type : 'max'}]
                       {
-                        name: '平均线',
+                        name: '年假',
                         // 支持 'average', 'min', 'max'
                         type: 'average'
 
@@ -181,7 +180,7 @@
                         data : [
                           // [{type : 'min'}, {type : 'max'}]
                           {
-                            name: '平均线',
+                            name: '病假',
                             // 支持 'average', 'min', 'max'
                         type: 'average'
 
@@ -243,6 +242,7 @@
             }).then((res) =>{
               if(res.data.code ==0){
                 let myEchars = this.$echarts.init(document.getElementById("forms"))
+                this.option.title.text = res.data.data.date+"年请假图表"
                 var i =0;
                 var total=0
                 var avg =0

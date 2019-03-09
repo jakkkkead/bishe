@@ -30,7 +30,7 @@
         </el-table-column>
         <el-table-column
           prop="lastTotal"
-          label="去年同期总计(元)"
+          label="同期总计(元)"
           width="150px">
         </el-table-column>
         <el-table-column
