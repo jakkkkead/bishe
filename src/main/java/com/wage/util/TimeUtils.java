@@ -1,9 +1,6 @@
 package com.wage.util;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.thymeleaf.util.DateUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,7 +12,7 @@ import java.util.regex.Pattern;
  * Created by hasee on 2018/4/28.
  */
 public class TimeUtils {
-    private static final Logger logger = LoggerFactory.getLogger(TimeUtils.class);
+  //  private static final Logger logger = LoggerFactory.getLogger(TimeUtils.class);
     private static HashMap<String, String> dateRegFormat = new HashMap<String, String>();
     public static ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
         @Override
@@ -552,7 +549,7 @@ public class TimeUtils {
             dates.add(simpleDateFormat.format(end));
             return dates;
         }catch (Exception e){
-            logger.info(e.getMessage());
+            //logger.info(e.getMessage());
         }
         return null;
     }
@@ -571,7 +568,7 @@ public class TimeUtils {
             dates.add(simpleDateFormat.format(end));
             return dates;
         }catch (Exception e){
-            logger.info(e.getMessage());
+            //logger.info(e.getMessage());
         }
         return null;
     }
@@ -627,7 +624,7 @@ public class TimeUtils {
 		try {
 			endDate = simpleDateFormat.parse(end);
 		} catch (ParseException e) {
-			logger.info("根据截止日期获取起始日期时间转换异常[{}]",e.getMessage());
+			//logger.info("根据截止日期获取起始日期时间转换异常[{}]",e.getMessage());
 		}
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(endDate);
@@ -643,7 +640,7 @@ public class TimeUtils {
 		try {
 			startDate = simpleDateFormat.parse(start);
 		} catch (ParseException e) {
-			logger.info("根据起始日期获取截止日期时间转换异常[{}]",e.getMessage());
+			//logger.info("根据起始日期获取截止日期时间转换异常[{}]",e.getMessage());
 		}
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
@@ -682,7 +679,7 @@ public class TimeUtils {
      	 try {
 			startDate = simpleDateFormat.parse(tmp2);
 		} catch (ParseException e) {
-			logger.info("时间转换异常[{}]",e.getMessage());
+			//logger.info("时间转换异常[{}]",e.getMessage());
 		}
      	 //当月1号
      	 calendar.setTime(startDate);
@@ -903,7 +900,7 @@ public class TimeUtils {
             Date lastWeekStart = calendar.getTime();
             format = simpleDateFormat.format(lastWeekStart);
         }catch (Exception e){
-            logger.info("获取周报上周起始时间失败[{}]",e.getMessage());
+         //   logger.info("获取周报上周起始时间失败[{}]",e.getMessage());
         }
         return format;
     }
@@ -931,7 +928,7 @@ public class TimeUtils {
             }
             return dates;
         }catch (Exception e){
-            logger.info(e.getMessage());
+           // logger.info(e.getMessage());
         }
         return null;
     }
@@ -963,7 +960,7 @@ public class TimeUtils {
         try {
             result = dayFormatter.get().parse(date);
         }catch (Exception e){
-            logger.info("将yyyy-MM-dd字符串格式转化成日期格式失败[{}]",e.getMessage());
+           // logger.info("将yyyy-MM-dd字符串格式转化成日期格式失败[{}]",e.getMessage());
         }
         return result;
     }

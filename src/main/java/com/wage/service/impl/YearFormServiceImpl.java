@@ -98,6 +98,12 @@ public class YearFormServiceImpl implements YearFormService {
         return list;
     }
 
+    /**
+     * 查询总工资，报销，项目及利润
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
     public List<Long> getPayList(String beginTime,String endTime){
         //获取总工资
         Long totalWage = wageMapper.getTotalWage(beginTime,endTime);

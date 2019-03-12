@@ -4,7 +4,6 @@ import com.wage.bean.ExpenseForms;
 import com.wage.bean.TWage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.boot.autoconfigure.social.TwitterAutoConfiguration;
 
 
 import java.util.List;
