@@ -23,6 +23,7 @@ import user_form from '../views/user/user_form'
 import year_map from '../views/year_totalform/year_map'
 import year_wage from '../views/year_totalform/year_wage'
 import year_categery from '../views/year_totalform/year_categery'
+import auto from '../views/auto/auto'
 
 //向外暴露路由器
 export default new VueRouter({
@@ -104,6 +105,10 @@ export default new VueRouter({
      {
        path : '/year_categery',
        component :year_categery
+     },
+     {
+       path : '/auto',
+       component :auto
      }
 
 

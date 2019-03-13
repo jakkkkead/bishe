@@ -83,6 +83,16 @@
                 <router-link to="year_wage"><el-menu-item index="6-3"><i class="el-icon-circle-plus"></i>财务总和报表</el-menu-item></router-link>
               </el-menu-item-group>
             </el-submenu>
+            <el-submenu index="7">
+              <template slot="title">
+                <i class="el-icon-picture-outline"></i>
+                <span>云接口</span>
+              </template>
+              <el-menu-item-group>
+                <router-link to="auto"><el-menu-item index="6-2"><i class="el-icon-view"></i>财务明细报表</el-menu-item></router-link>
+
+              </el-menu-item-group>
+            </el-submenu>
           </el-menu>
         </el-col>
 

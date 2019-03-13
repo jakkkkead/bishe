@@ -16,13 +16,24 @@ spring:
     password: 123456
   thymeleaf:
     cache: true
-#  dubbo:
-#    application:
-#      name: provider
-#    registry:
-#      address: zookeeper://127.0.0.1:2181
-#    protocol:
-#      name: dubbo
-#      port: 20880
-#    scan: com.commom.dubbo
+#dubbo配置
+  dubbo:
+    application:
+      name: provider
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    protocol:
+      name: dubbo
+      port: 20880
+    scan: com.wage
+#reids配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 8
+      max-wait: 1
+      max-idle: 8
+      min-idle: 0
+    timeout: 5000
 

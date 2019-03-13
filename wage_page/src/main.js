@@ -5,7 +5,7 @@ import Vue from 'vue'
 import App from  './App'
 import { Button, Select,Radio,DatePicker,Tabs,TabPane,Icon,Dropdown,DropdownMenu,DropdownItem,
   MenuItem,MenuItemGroup,Row,Col,Menu,Submenu,Form,FormItem,Switch,CheckboxGroup,Checkbox,
-RadioGroup,Input,Option,TimePicker,Table,TableColumn,Pagination,Dialog} from 'element-ui'
+RadioGroup,Input,Option,TimePicker,Table,TableColumn,Pagination,Dialog,Upload} from 'element-ui'
 import router from './router/index'
 import qs from 'qs'
 Vue.prototype.$qs = qs
@@ -49,6 +49,7 @@ Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
 Vue.component(Pagination.name, Pagination);
 Vue.component(Dialog.name, Dialog);
+Vue.component(Upload.name, Upload);
 new Vue({
   el:'#app',
   components:{
