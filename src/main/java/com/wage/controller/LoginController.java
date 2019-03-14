@@ -115,6 +115,16 @@ public class LoginController {
         return RestResultGenerator.createOkResult(obj);
 
     }
+    @RequestMapping("getUserName")
+    @ResponseBody
+    public RestResult getUserName(HttpSession session) {
+        TUser user = (TUser) session.getAttribute("user");
+        if (user == null) {
+            return RestResultGenerator.createFailResult("请先登录！");
+        }else{
+            return RestResultGenerator.createOkResult(user);
+        }
+    }
 
 
 

@@ -42,8 +42,8 @@ public class MymvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-//            String[] exclues = new String[]{"/tologin","/tosigin","/sigin","/login","/js/**","/css/**"};
-//        interceptorRegistry.addInterceptor(new LoginHandler()).addPathPatterns("/**").excludePathPatterns(exclues);
+            String[] exclues = new String[]{"/tologin","/tosigin","/sigin","/login","/js/**","/css/**"};
+        interceptorRegistry.addInterceptor(new LoginHandler()).addPathPatterns("/**").excludePathPatterns(exclues);
     }
 
     @Override

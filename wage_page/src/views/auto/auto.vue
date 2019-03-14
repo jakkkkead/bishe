@@ -52,17 +52,12 @@
             selectLine:-1,
             fileId:'',
             option : {
-
-              dataset:{
-                source :[]
-              },
               legend: {
                 top : 30,
                 right:'6%',
                 bottom : 20
               },
               title : {
-                text : '费用报销',
                 top : '2%',
                 height: 100
 
@@ -82,7 +77,7 @@
               ],
               xAxis : [
                 {
-                  name : '类型',
+                  name :'类目',
                   type : 'category',
                   axisTick: {
                     alignWithLabel: true
@@ -92,45 +87,21 @@
               ],
               yAxis : [
                 {
-                  name :'金额(元)',
                   type : 'value',
                   gridIndex : 0
                 }
               ],
               series : [
                 {
-                  name:'报销金额',
                   type:'bar',
                   barWidth: '30%',
-                  encode: {
-                    // 将 "amount" 列映射到 X 轴。
-                    x: 'typeName',
-                    // 将 "product" 列映射到 Y 轴。
-                    y: 'money'
-                  },
-                  itemStyle :{
-                    color : '#2894FF'
-                  }
-                },{
-
-                  type:'line',
-                  tooltip :{
-                    show : false
-                  },
-                  encode: {
-                    // 将 "amount" 列映射到 X 轴。
-                    x: 'typeName',
-                    // 将 "product" 列映射到 Y 轴。
-                    y: 'money'
-                  }
+                  // itemStyle :{
+                  //   color : '#2894FF'
+                  // }
                 },
                 {
                   name : '类目占比',
                   type : 'pie',
-                  encode: {
-                    itemName :'typeName',
-                    value : 'money'
-                  },
                   center: ['75%', '50%'],
                   radius: '35%',
                   tooltip: {
@@ -164,7 +135,23 @@
           console.log(options)
           this.lineOptions = options
         },
+        checkFileType(file) {
+          var fileTypes = new Array("xls","xlsx");
+          var fileTypeFlag = "0";
+          var selectedFile  = file.name
+          var filetype = selectedFile .substring(selectedFile .indexOf('.') + 1, selectedFile .length)
+          console.log(filetype)
+          for (var i = 0; i < fileTypes.length; i++) {
+            if (fileTypes[i].indexOf(filetype) !=-1) {
+              fileTypeFlag = "1";
+            }
+          }
+          if (fileTypeFlag == "0") {
+            return
+          }
+        },
         beforeUpload(file){
+          this.checkFileType(file)
           let fd = new FormData();
           fd.append('file',file);//传文件
           this.axios({
@@ -183,8 +170,14 @@
                 typeOptin.label = typeList[i]
                 options[i] = typeOptin
               }
-              this.createLine(typeList.length)
+              var typeOptin = new Object()
+              typeOptin.value = -1;
+              typeOptin.label = "默认"
+              options[typeList.length] = typeOptin
               this.headTypes = options
+              //设置分割线
+              this.createLine(typeList.length)
+
             }else{
               alert(res.data.msg)
             }
@@ -197,12 +190,50 @@
             url: 'http://localhost:8082/getExcelForm?fileId='+this.fileId+'&index='+this.selectLine+'&x='+this.x+'&y='+this.y,
           }).then((res) => {
             if(res.data.code === 0){
+              var data = res.data.data
               let myEchars = this.$echarts.init(document.getElementById("autoWage"))
-
+              if(data.type =='map'){
+                  this.mapData(data)
+              }else{
+                  this.listData(data)
+              }
+              myEchars.setOption(this.option)
             }else{
               alert(res.data.msg)
             }
           })
+        },
+        //封装map类型数据
+        mapData(data){
+         // this.option.yAxis.data = Object.keys(data.obj[0])
+          this.option.xAxis[0].name = data.xname
+          this.option.yAxis[0].name = data.yname
+          this.option.series[0].name =data.xname
+          console.log(data)
+          this.option.xAxis[0].data = Object.keys(data.objects[0])
+          this.option.series[0].data = Object.keys(data.objects[0]).map(function (key) {
+            return data.objects[0][key];
+          })
+          this.option.series[1].data = Object.keys(data.objects[0]).map(function (key) {
+            return {
+              name: key,
+              value: data.objects[0][key]
+            }
+          })
+          console.log(this.option.series[1].data)
+        },
+        //封装list类型数据
+        listData(data){
+          this.option.xAxis[0].data = data.objects[0]
+          this.option.series[0].data = data.objects[1]
+          var options = new Array() ;
+          for(var i=0;i<data.objects[0].length;i++){
+            var pie = new Object()
+            pie.value = data.objects[1][i];
+            pie.name = data.objects[0][i]
+            options[i] = pie
+          }
+          this.option.series[1].data = options
         }
 
       }

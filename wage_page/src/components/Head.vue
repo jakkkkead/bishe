@@ -2,7 +2,7 @@
     <div id="header">
       <span id = "system-name">Wage_System</span>
       <div id="head-menu">
-        <span>用户名</span>
+        <span>{{userName}}</span>
       <el-dropdown>
         <span class="el-dropdown-link">
         <font color="white">设置</font><i class="el-icon-setting"></i>
@@ -18,7 +18,31 @@
 
 <script>
     export default {
-        name: "Head"
+        name: "Head",
+      data(){
+          return {
+            userName:''
+          }
+      },
+      methods:{
+          getUserName(){
+            this.axios({
+              method:'get',
+              url:'http://localhost:8083/getUserName'
+            }).then((res)=>{
+                if(res.data.code == 0 ){
+                  console.log(res.data.data)
+                  this.userName = res.data.data.name
+                }else{
+                    alert(res.data.msg)
+                   window.location.href="http://locahost:8083/tologin"
+                }
+            })
+          }
+      },
+      mounted() {
+          this.getUserName
+      }
     }
 </script>
 
