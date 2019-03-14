@@ -89,7 +89,7 @@
                 <span>云接口</span>
               </template>
               <el-menu-item-group>
-                <router-link to="auto"><el-menu-item index="6-2"><i class="el-icon-view"></i>Excel接口</el-menu-item></router-link>
+                <router-link to="auto"><el-menu-item index="6-2"><i class="el-icon-view"></i>Excel云接口</el-menu-item></router-link>
 
               </el-menu-item-group>
             </el-submenu>

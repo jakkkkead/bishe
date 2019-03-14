@@ -40,7 +40,6 @@
         <if test="area !=null">
             and area =#{area}
         </if>
-
         GROUP BY intType
     </select>
     <select id="getTotalItemPay" resultType="java.lang.Long">
@@ -53,12 +52,12 @@
               <foreach collection="monthList" item="monthvalue" open="(" separator="," close=")">
                   #{monthvalue}
               </foreach>
-
+           and status =2
         GROUP BY strignName
     </select>
     <select id="getYearItemFormToDepart" resultMap="formMap">
         SELECT SUM(payment) totalValue, depart_id as intType  FROM t_item
-        WHERE DATE_FORMAT(begin_time,'%Y') = #{year}
+        WHERE DATE_FORMAT(begin_time,'%Y') = #{year} and status =2
         GROUP BY intType
     </select>
     <select id="getItemMapForm" resultMap="commomMap">

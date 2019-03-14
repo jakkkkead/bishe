@@ -29,6 +29,10 @@ import auto from '../views/auto/auto'
 export default new VueRouter({
   //配置n个路由
    routes : [
+     {
+       path:'/',
+       redirect:'expense_view'
+     },
     {
       path : '/expense_add',
       //可以引入组件,无需引号

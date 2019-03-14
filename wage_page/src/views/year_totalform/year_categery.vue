@@ -215,14 +215,14 @@
                   itemStyle : { normal: {label : {show: true}}}
                 },
                 {
-                  name: '业务指标',
+                  name: '关键指标',
                   radius:'39%',
                   center : ['22%', '80%'],
                   max:300000,
                   min:-300000,
                   type: 'gauge',
                   detail: {formatter:'{value}%'},
-                  data: [{value: 300002, name: '完成率'},{value: -20, name: '成交率'}]
+                  data: [{value: 0, name: '利润增长率'}]
                 }
 
 
@@ -259,6 +259,9 @@
           this.tableData[0].expense = data[2]
           this.tableData[0].item = data[3]
           this.tableData[0].total = data[4]
+          var lastTotal = data[4].substr(0,data[4].length-1)
+          this.option.series[4].data[0].value=lastTotal*1
+
         },
           setLineData(data){
           console.log(data)
@@ -276,8 +279,6 @@
                  this.option.series[i+1].data[y] = data[i][y].value
                  this.option.xAxis[i].data[y] = data[i][y].name
                }
-              console.log(this.option.series[i+1].data)
-                console.log(this.option.xAxis[i].data)
              }
 
 

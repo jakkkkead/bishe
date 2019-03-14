@@ -51,7 +51,8 @@
                   type : 'value',
                   name : '天数'
                 }
-              ], dataZoom: [
+              ],
+              dataZoom: [
                 {
                   type: 'slider',
                   show: true,

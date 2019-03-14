@@ -26,7 +26,7 @@
       </el-select>
         <el-button  size="small" type="primary" @click="selectXY">确认</el-button>
     </div>
-      <div id ="autoWage" style="width: 100%; height:600px"></div>
+      <div id ="autoWage" style="width: 100%; height:500px"></div>
     </div>
 </template>
 
@@ -70,9 +70,9 @@
               },
               grid: [
                 {
-                  top:'15%',
+                  top:'18%',
                   left:'7%',
-                  right:'50%'
+                  right:'45%'
                 }
               ],
               xAxis : [
@@ -91,10 +91,58 @@
                   gridIndex : 0
                 }
               ],
+              dataZoom: [
+                {
+                  type: 'slider',
+                  show: true,
+                  xAxisIndex: [0],
+                  filterMode: 'empty',
+                  height: 8,
+                  handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7v-1.2h6.6z M13.3,22H6.7v-1.2h6.6z M13.3,19.6H6.7v-1.2h6.6z', // jshint ignore:line
+                  handleSize: 20
+                },
+                {
+                  type: 'slider',
+                  show: true,
+                  yAxisIndex: [0],
+                  filterMode: 'empty',
+                  right:'39%',
+                  width:8,
+                  handleIcon: 'M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7v-1.2h6.6z M13.3,22H6.7v-1.2h6.6z M13.3,19.6H6.7v-1.2h6.6z', // jshint ignore:line
+                  handleSize: 20
+                },
+                {
+                  type: 'inside',
+                  xAxisIndex: [0],
+                  filterMode: 'empty',
+                  height: 8
+                }
+
+              ],
+              toolbox: {
+                show: true,
+                // orient : 'vertical',
+                left: '5%',
+                top: '5%',
+                feature : {
+                  mark : {show: true},
+                  dataView : {show: true, readOnly: false},
+                  restore : {show: true},
+                  saveAsImage : {show: true}
+                }
+              },
               series : [
                 {
                   type:'bar',
-                  barWidth: '30%',
+                  barMaxWidth:'15%',
+                  label: {
+                    show: true, //开启显示
+                    position: 'top', //在上方显示
+                    textStyle: { //数值样式
+                      color: 'black',
+                      fontSize: 16
+                    }
+                  }
                   // itemStyle :{
                   //   color : '#2894FF'
                   // }
@@ -102,8 +150,8 @@
                 {
                   name : '类目占比',
                   type : 'pie',
-                  center: ['75%', '50%'],
-                  radius: '35%',
+                  center: ['80%', '50%'],
+                  radius: '28%',
                   tooltip: {
                     trigger :'item',
                     formatter: "{a} <br/>{b} : ({d}%)"},

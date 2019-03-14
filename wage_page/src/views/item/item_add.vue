@@ -70,7 +70,7 @@
           departId: '',
           principal: '',
           description: '',
-          status: 0,
+          status: 2,
           payment: '',
           type:'',
           area:'',
