@@ -8,8 +8,8 @@
         <font color="white">设置</font><i class="el-icon-setting"></i>
   </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>注册新用户</el-dropdown-item>
-          <el-dropdown-item>退出系统</el-dropdown-item>
+          <el-dropdown-item @click.native="sigin">注册新用户</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退出系统</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       </div>
@@ -38,10 +38,17 @@
                    window.location.href="http://locahost:8083/tologin"
                 }
             })
+          },
+          sigin(){
+            window.location.href = "http://localhost:8083/tosigin"
+          },
+          logout(){
+            alert("kkk")
+            window.location.href = "http://localhost:8083/logout"
           }
       },
       mounted() {
-          this.getUserName
+          //this.getUserName
       }
     }
 </script>

@@ -1,5 +1,6 @@
 package com.wage.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -13,7 +14,9 @@ import org.springframework.web.servlet.config.annotation.*;
 import java.util.List;
 
 @Configuration
-public class MymvcConfig implements WebMvcConfigurer {
+public class MymvcConfig extends WebMvcConfigurerAdapter {
+    @Autowired
+    private LoginHandler loginHandler;
 
     @Override
     public void configurePathMatch(PathMatchConfigurer pathMatchConfigurer) {
@@ -42,8 +45,8 @@ public class MymvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-//            String[] exclues = new String[]{"/tologin","/tosigin","/sigin","/login","/js/**","/css/**"};
-//        interceptorRegistry.addInterceptor(new LoginHandler()).addPathPatterns("/**").excludePathPatterns(exclues);
+            String[] exclues = new String[]{"/tologin","/tosigin","/sigin","/login","/js/**","/css/**"};
+        interceptorRegistry.addInterceptor(loginHandler).addPathPatterns("/**").excludePathPatterns(exclues);
     }
 
     @Override
