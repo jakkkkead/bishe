@@ -64,6 +64,7 @@
                and depart_id = #{departId}
            </if>
         </where>
+          order by create_time desc
         limit #{currentIndex},#{pageSize}
     </select>
     <select id="getExpensCount" resultType="java.lang.Integer">
@@ -98,6 +99,7 @@
                    </if>
 
                 </where>
+          order by create_time desc
         limit #{currentIndex},#{pageSize}
     </select>
     <select id="getExpenseById" resultType="com.wage.bean.TExpense">

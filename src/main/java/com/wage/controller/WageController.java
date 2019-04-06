@@ -32,6 +32,7 @@ public class WageController {
         }
 
     }
+    //每月一号，自动计算上月工资
     @Scheduled( cron ="0 0 0 1 * ?")
     public RestResult AotuCaculateWage(){
         String date = TimeUtils.formatDate(new Date());

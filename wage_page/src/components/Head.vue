@@ -43,7 +43,6 @@
             window.location.href = "http://localhost:8083/tosigin"
           },
           logout(){
-            alert("kkk")
             window.location.href = "http://localhost:8083/logout"
           }
       },

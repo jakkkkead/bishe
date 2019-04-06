@@ -37,7 +37,7 @@ public class YearFormServiceImpl implements YearFormService {
         List <ExpenseForms> itemMonthList = itemMapper.getMonthItemForm(monthList);
         itemMonthList = FormUtils.checkYearForm(itemMonthList,monthList);
         List <ExpenseForms> itemDepartList = itemMapper.getYearItemFormToDepart(sYear);
-        //转成：valeu，name 形式--》适配饼图
+        //转成：valeu，name 形式--》适配饼图 , 项目收入
         List<CommomFormBean> itemDapartComList = FormUtils.checkFormToCommBean(itemDepartList,FormUtils.getTypeList(5),"depart");
         //支出 : 工资 + 报销
         List<ExpenseForms> payDepList = wageMapper.getWageAndExpenseToDepart(sYear);

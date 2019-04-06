@@ -37,6 +37,7 @@
                 and depart_id =#{departId}
             </if>
         </where>
+      order by begin_time desc
       limit #{index},#{pageSize}
     </select>
     <select id="getCount" resultType="java.lang.Integer">

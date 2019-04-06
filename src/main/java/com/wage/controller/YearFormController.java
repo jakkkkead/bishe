@@ -22,8 +22,8 @@ public class YearFormController {
         Object obj = yearFormService.getYearDetailForm(year);
         return RestResultGenerator.createOkResult(obj);
     }
-    @RequestMapping("upload")
+ /*   @RequestMapping("upload")
     public Object up(MultipartFile file){
         return "String";
-    }
+    }*/
 }

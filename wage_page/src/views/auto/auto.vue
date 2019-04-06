@@ -122,8 +122,8 @@
               toolbox: {
                 show: true,
                 // orient : 'vertical',
-                left: '5%',
-                top: '5%',
+                left: '4%',
+                top: '4%',
                 feature : {
                   mark : {show: true},
                   dataView : {show: true, readOnly: false},

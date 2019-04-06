@@ -46,7 +46,7 @@ public class MymvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
             String[] exclues = new String[]{"/tologin","/tosigin","/sigin","/login","/js/**","/css/**"};
-        interceptorRegistry.addInterceptor(loginHandler).addPathPatterns("/**").excludePathPatterns(exclues);
+       interceptorRegistry.addInterceptor(loginHandler).addPathPatterns("/**").excludePathPatterns(exclues);
     }
 
     @Override

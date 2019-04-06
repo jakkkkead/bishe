@@ -54,6 +54,7 @@
                   and  depart_id =#{departId}
               </if>
           </where>
+            order by create_time desc
           limit #{index},#{pageSize}
     </select>
     <select id="getUserCount" resultType="java.lang.Integer">

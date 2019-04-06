@@ -63,6 +63,7 @@ public class FormUtils {
         List<CommomFormBean> commomList = new ArrayList<>();
 
         CommomFormBean commonBean ;
+        //填充为空的数据
         if(list ==null && list.size()==0){
             for(Integer type : typeList){
                 commonBean = new CommomFormBean();
