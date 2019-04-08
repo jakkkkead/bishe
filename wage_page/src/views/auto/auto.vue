@@ -13,7 +13,7 @@
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       </el-upload>
         数据分割线
-        <el-select v-model="selectLine" placeholder="请选择X轴">
+        <el-select v-model="selectLine" placeholder="请选择X轴" style="width: 10%">
           <el-option v-for="item in lineOptions" :key="item.value" :value="item.value" :label="item.value"></el-option>
         </el-select>
         X轴:
@@ -24,6 +24,10 @@
       <el-select v-model="y" placeholder="请选择y轴">
         <el-option v-for="item in headTypes" :key="item.value" :value="item.value" :label="item.label"></el-option>
       </el-select>
+        类型
+        <el-select v-model="valueType" placeholder="类型"  style="width: 10%">
+          <el-option v-for="item in valueTypes" :key="item.value" :value="item.value" :label="item.label"></el-option>
+        </el-select>
         <el-button  size="small" type="primary" @click="selectXY">确认</el-button>
     </div>
       <div id ="autoWage" style="width: 100%; height:500px"></div>
@@ -41,6 +45,24 @@
                 label:'默认'
               }
               ],
+            valueTypes:[
+              {
+                value: 0,
+                label: '总和'
+              },
+              {
+                value: 1,
+                label: '最大值'
+              },
+              {
+                value: 2,
+                label: '平均值'
+              },
+              {
+                value: 3,
+                label: '最小值'
+              },
+            ],
             lineOptions:[
               {
                 value: -1,
@@ -49,14 +71,15 @@
             ],
             x:-1,
             y:-1,
+            valueType:0,
             selectLine:-1,
             fileId:'',
             option : {
-              legend: {
-                top : 30,
-                right:'6%',
-                bottom : 20
-              },
+              // legend: {
+              //   top : 30,
+              //   right:'6%',
+              //   bottom : 20
+              // },
               title : {
                 top : '2%',
                 height: 100
@@ -157,11 +180,11 @@
                     formatter: "{a} <br/>{b} : ({d}%)"},
                   label: {
                     show : true,
-                    positon : 'outside'
-                  },
-                  labelLine: {
-                    show : true
+                    position : 'inside'
                   }
+                  // labelLine: {
+                  //   show : false
+                  // }
 
                 }
               ]
@@ -235,7 +258,7 @@
         selectXY(){
           this.axios({
             method: 'get',
-            url: 'http://localhost:8082/getExcelForm?fileId='+this.fileId+'&index='+this.selectLine+'&x='+this.x+'&y='+this.y,
+            url: 'http://localhost:8082/getExcelForm?fileId='+this.fileId+'&index='+this.selectLine+'&x='+this.x+'&y='+this.y+"&valueType="+this.valueType,
           }).then((res) => {
             if(res.data.code === 0){
               var data = res.data.data
